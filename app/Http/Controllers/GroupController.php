@@ -96,20 +96,13 @@ class GroupController extends Controller
 
     public function save_company(Request $request)
     {
-        // try
+         try
         {
-
-
             $company = Company::create($request->except(['_token']));
-            $from = \Carbon\Carbon::parse($company->expiry);
-            $to = \Carbon\Carbon::now();
-            if ($to->diffInMonths($from, true) <= 1) {
-                \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> is going to expire on this date " . $company->expiry));
-            }
 
             return redirect()->back();
         }
-        //  catch(\Exception $exception)
+          catch(\Exception $exception)
         {
             \Session::flash('error', $exception->getMessage());
             return redirect()->back();
