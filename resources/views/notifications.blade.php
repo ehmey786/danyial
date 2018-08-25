@@ -22,7 +22,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        {{--<th>Id</th>--}}
                         <th>Description</th>
                         <th>Created At</th>
                         <th>Delete</th>
@@ -36,7 +36,7 @@
                         @else
                     @foreach($data['notifications'] as $group)
                     <tr>
-                        <td>{{$group->id}}</td>
+                        {{--<td>{{$group->id}}</td>--}}
                         <td>{{$group->desc}}</td>
                         <td>{{$group->created_at}}</td>
                         <td><a href="{{url('notification/delete/'.$group->id)}}" class="btn btn-danger">Delete</a></td>
