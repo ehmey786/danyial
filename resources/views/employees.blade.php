@@ -28,11 +28,11 @@
                     <tr>
                         {{--<th>Id</th>--}}
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Website</th>
-                        <th>Capital</th>
+                        <th>Contact</th>
+                        <th>Designation</th>
+                        <th>Nationality</th>
                         <th>Document</th>
-                        <th>Financial End Date</th>
+                        <th>Visa Expiry Date</th>
                         <th>Created At</th>
                         <th>Action</th>
                     </tr>
