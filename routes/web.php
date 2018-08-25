@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['AdminLogin']], function () {
     Route::get('/groups','GroupController@index')->name('groups');
-    Route::get('/','GroupController@index');
+   // Route::get('/','GroupController@index');
 });
 
 
