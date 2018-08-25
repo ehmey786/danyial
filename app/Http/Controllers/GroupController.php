@@ -73,11 +73,17 @@ class GroupController extends Controller
         $companies=Company::all();
 
         foreach($companies as $company){
-            $from = \Carbon\Carbon::parse($company->expiry);
-            $to = \Carbon\Carbon::now();
-            if ($to->diffInMonths($from, true) <= 1) {
-                \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> is going to expire on this date " . $company->expiry));
+            if($company->notify!=1){
+                $from = \Carbon\Carbon::parse($company->expiry);
+                $to = \Carbon\Carbon::now();
+                if ($to->diffInMonths($from, true) <= 1) {
+                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> is going to expire on this date " . $company->expiry));
+                }
             }
+
+            $company->notify=1;
+            $company->save();
+
         }
 
 
