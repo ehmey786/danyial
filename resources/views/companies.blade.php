@@ -23,7 +23,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        {{--<th>Id</th>--}}
                         <th>Name</th>
                         <th>Account #</th>
                         <th>Account Name</th>
@@ -45,7 +45,7 @@
                         @else
                     @foreach($data['companies'] as $group)
                     <tr>
-                        <td>{{$group->id}}</td>
+                        {{--<td>{{$group->id}}</td>--}}
                         <td>{{$group->name}}</td>
                         <td>{{$group->a_number}}</td>
                         <td>{{$group->a_name}}</td>

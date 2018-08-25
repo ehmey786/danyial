@@ -29,7 +29,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            {{--<th>Id</th>--}}
                             <th>Name</th>
                             <th>Created At</th>
                             <th>Delete</th>
@@ -43,7 +43,7 @@
                         @else
                             @foreach($data['files'] as $group)
                                 <tr>
-                                    <td>{{$group->id}}</td>
+                                    {{--<td>{{$group->id}}</td>--}}
                                     <td><a href="{{asset($group->name)}}" download>{{$group->name}}</a></td>
                                     <td>{{$group->created_at}}</td>
 

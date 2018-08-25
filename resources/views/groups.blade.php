@@ -22,7 +22,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        {{--<th>Id</th>--}}
                         <th>Name</th>
                         <th>Created At</th>
                         <th>Companies</th>
@@ -37,7 +37,7 @@
                         @else
                     @foreach($data['groups'] as $group)
                     <tr>
-                        <td>{{$group->id}}</td>
+                        {{--<td>{{$group->id}}</td>--}}
                         <td><a href="{{url('group/companies/'.$group->id)}}">{{$group->name}}</a></td>
                         <td>{{$group->created_at}}</td>
 
