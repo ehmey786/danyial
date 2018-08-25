@@ -80,14 +80,13 @@ class GroupController extends Controller
 
     public function save_company(Request $request)
     {
-        //try
+        try
         {
             Company::create($request->except(['_token']));
             return redirect()->back();
         }
-      //  catch(\Exception $exception)
-        {
-         //   \Session::flash('error',$exception->getMessage());
+        catch(\Exception $exception){
+            \Session::flash('error',$exception->getMessage());
             return redirect()->back();
         }
     }
