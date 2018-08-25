@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
             $table->string('origin','1000');
             $table->string('card','1000');
             $table->string('phone','1000');
+            $table->string('expiry','1000');
             $table->integer('group_id');
             $table->timestamps();
         });

@@ -125,7 +125,10 @@
                             </div>
 
 
-
+                            <div class="form-group">
+                                <label for="email">Expiry:</label>
+                                <input type="date"  class="form-control"name="expiry"   required>
+                            </div>
 
 
 

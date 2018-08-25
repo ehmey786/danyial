@@ -25,7 +25,7 @@
                         {{--<th>Id</th>--}}
                         <th>Description</th>
                         <th>Created At</th>
-                        <th>Delete</th>
+                        {{--<th>Delete</th>--}}
                     </tr>
                     </thead>
                     <tbody>
@@ -34,12 +34,12 @@
                             <td colspan="3">NO DATA</td>
                                  </tr>
                         @else
+
                     @foreach($data['notifications'] as $group)
                     <tr>
                         {{--<td>{{$group->id}}</td>--}}
-                        <td>{{$group->desc}}</td>
+                        <td><?php echo $group->data['data']; ?></td>
                         <td>{{$group->created_at}}</td>
-                        <td><a href="{{url('notification/delete/'.$group->id)}}" class="btn btn-danger">Delete</a></td>
                     </tr>
                     @endforeach
                         @endif

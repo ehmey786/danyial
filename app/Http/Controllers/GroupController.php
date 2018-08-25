@@ -6,6 +6,8 @@ use App\Company;
 use App\Employee;
 use App\File;
 use App\Group;
+use App\Notifications\companyExpiary;
+use Auth;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -34,11 +36,12 @@ class GroupController extends Controller
     }
 
 
-    public function update_document($id,Request $request){
-        $emp_id=Employee::find($id);
+    public function update_document($id, Request $request)
+    {
+        $emp_id = Employee::find($id);
         if ($request->has('file')) {
             $file = $request->file('file');
-            $fileName = $emp_id->id.'.' . $file->getClientOriginalExtension();
+            $fileName = $emp_id->id . '.' . $file->getClientOriginalExtension();
             $folderPath = public_path('documents/');
             $file->move($folderPath, $fileName);
         }
@@ -47,10 +50,10 @@ class GroupController extends Controller
 
     public function save_employee(Request $request)
     {
-        $emp_id=Employee::create($request->except(['_token']));
+        $emp_id = Employee::create($request->except(['_token']));
         if ($request->has('file')) {
             $file = $request->file('file');
-            $fileName = $emp_id->id.'.' . $file->getClientOriginalExtension();
+            $fileName = $emp_id->id . '.' . $file->getClientOriginalExtension();
             $folderPath = public_path('documents/');
             $file->move($folderPath, $fileName);
         }
@@ -65,9 +68,22 @@ class GroupController extends Controller
     }
 
 
-    public function notificationsAll(){
-        $data['notifications']=null;
-        $data['notifications_count']=null;
+    public function notificationsAll()
+    {
+        $companies=Company::all();
+
+        foreach($companies as $company){
+            $from = \Carbon\Carbon::parse($company->expiry);
+            $to = \Carbon\Carbon::now();
+            if ($to->diffInMonths($from, true) <= 1) {
+                \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> is going to expire on this date " . $company->expiry));
+            }
+        }
+
+
+
+        $data['notifications'] = Auth::user()->notifications()->orderby('id', 'desc')->take(100)->paginate(20);
+        $data['notifications_count'] = count(Auth::user()->notifications);
         return view('notifications', compact('data'));
     }
 
@@ -80,13 +96,22 @@ class GroupController extends Controller
 
     public function save_company(Request $request)
     {
-        try
+        // try
         {
-            Company::create($request->except(['_token']));
+
+
+            $company = Company::create($request->except(['_token']));
+            $from = \Carbon\Carbon::parse($company->expiry);
+            $to = \Carbon\Carbon::now();
+            if ($to->diffInMonths($from, true) <= 1) {
+                \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> is going to expire on this date " . $company->expiry));
+            }
+
             return redirect()->back();
         }
-        catch(\Exception $exception){
-            \Session::flash('error',$exception->getMessage());
+        //  catch(\Exception $exception)
+        {
+            \Session::flash('error', $exception->getMessage());
             return redirect()->back();
         }
     }
