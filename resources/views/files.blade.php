@@ -44,7 +44,7 @@
                             @foreach($data['files'] as $group)
                                 <tr>
                                     <td>{{$group->id}}</td>
-                                    <td><a href="{{url($group->name)}}" download>{{$group->name}}</a></td>
+                                    <td><a href="{{asset($group->name)}}" download>{{$group->name}}</a></td>
                                     <td>{{$group->created_at}}</td>
 
 

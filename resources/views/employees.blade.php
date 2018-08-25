@@ -53,7 +53,7 @@
                         <td>{{$group->capital}}</td>
                         <td>
                             @if(file_exists( public_path() . '/documents/' . $group->id . '.png'))
-                                <a href="{{url('documents/' . $group->id . '.png')}}" download>Download</a>
+                                <a href="{{asset('documents/' . $group->id . '.png')}}" download>Download</a>
                             @else
                                 No Document
                             @endif
