@@ -27,6 +27,7 @@
                         <th>Name</th>
                         <th>Account #</th>
                         <th>Account Name</th>
+                        <th>Expiry </th>
                         <th>Date of Inc </th>
                         <th>Origin </th>
                         <th>Card </th>
@@ -49,6 +50,7 @@
                         <td>{{$group->name}}</td>
                         <td>{{$group->a_number}}</td>
                         <td>{{$group->a_name}}</td>
+                        <td>{{$group->expiry}}</td>
                         <td>{{$group->date_inc}}</td>
                         <td>{{$group->origin}}</td>
                         <td>{{$group->card}}</td>
