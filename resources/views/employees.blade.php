@@ -136,17 +136,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Email*:</label>
+                                <label for="email">Contact*:</label>
                                 <input type="text" class="form-control"name="email" id="email" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Website:</label>
+                                <label for="email">Designation:</label>
                                 <input type="text" class="form-control"name="website" id="website" >
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Capital*:</label>
+                                <label for="email">Nationality*:</label>
                                 <input type="text" class="form-control"name="capital" id="capital"  required>
                             </div>
 
@@ -156,7 +156,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Financial Date*:</label>
+                                <label for="email">Visa Expiry Date*:</label>
                                 <input type="date" class="form-control"name="fi_end_date" id="f_date" required>
 
                             </div>
