@@ -15,7 +15,7 @@
     <body>
 
         <div class="container">
-            <h2>Groups <small>(Total:{{count($data['groups'])}}) - <a data-toggle="modal" data-target="#myModal">Add new</a></small> </h2>
+            <h2>Groups <small>(Total:{{count($data['groups'])}}) - <a data-toggle="modal" data-target="#myModal">Add new</a> - <a href="{{url('/')}}">Home</a></small> </h2>
             <hr>
 
             <div class="content">

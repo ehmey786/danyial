@@ -19,11 +19,18 @@
             <hr>
 
             <div class="content">
+                <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Account #</th>
+                        <th>Account Name</th>
+                        <th>Date of Inc </th>
+                        <th>Origin </th>
+                        <th>Card </th>
+                        <th>Phone # </th>
                         <th>Created At</th>
                         <th>Files</th>
                         <th>Employees</th>
@@ -40,7 +47,13 @@
                     <tr>
                         <td>{{$group->id}}</td>
                         <td>{{$group->name}}</td>
-                        <td>{{$group->created_at}}</td>
+                        <td>{{$group->a_number}}</td>
+                        <td>{{$group->a_name}}</td>
+                        <td>{{$group->date_inc}}</td>
+                        <td>{{$group->origin}}</td>
+                        <td>{{$group->card}}</td>
+                        <td>{{$group->phone}}</td>
+                        <td>{{ \Carbon\Carbon::parse($group->created_at)->format('M d, Y')}}</td>
 
                         <td>{{count($group->files)}}</td>
                         <td>{{count($group->employees)}}</td>
@@ -50,6 +63,7 @@
                         @endif
                     </tbody>
                 </table>
+            </div>
             </div>
             @if(count($data['companies'])!=0)
                 {{$data['companies']->links()}}
@@ -66,7 +80,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add Employee</h4>
+                        <h4 class="modal-title">Add Company</h4>
                     </div>
                     <div class="modal-body">
                         <form action="{{url('save_company')}}" id="submit" method="post">
@@ -76,6 +90,42 @@
                                 <input type="text" class="form-control"name="name" id="email" required>
                                 <input type="text" style="display:none;" class="form-control"name="group_id" value="{{$data['group']->id}}"  required>
                             </div>
+
+                            <div class="form-group">
+                                <label for="email">Account Name:</label>
+                                <input type="text"  class="form-control"name="a_name"  required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="email">Account #:</label>
+                                <input type="text"   class="form-control"name="a_number"   required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="email">Phone:</label>
+                                <input type="text"   class="form-control"name="phone"   required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="email">Card:</label>
+                                <input type="text"  class="form-control"name="card"  required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Origin:</label>
+                                <input type="text"   class="form-control"name="origin"   required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Date of Incorporation:</label>
+                                <input type="date"  class="form-control"name="date_inc"   required>
+                            </div>
+
+
+
 
 
 

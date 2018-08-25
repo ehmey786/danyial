@@ -8,8 +8,7 @@
         <title>{{$data['company']->name}} - Employees</title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
     </head>
     <body>
@@ -32,6 +31,7 @@
                         <th>Email</th>
                         <th>Website</th>
                         <th>Capital</th>
+                        <th>Document</th>
                         <th>Financial End Date</th>
                         <th>Created At</th>
                         <th>Action</th>
@@ -51,10 +51,59 @@
 
                         <td>{{$group->website}}</td>
                         <td>{{$group->capital}}</td>
+                        <td>
+                            @if(file_exists( public_path() . '/documents/' . $group->id . '.png'))
+                                <a href="{{url('documents/' . $group->id . '.png')}}" download>Download</a>
+                            @else
+                                No Document
+                            @endif
+                        </td>
                         <td>{{$group->fi_end_date}}</td>
                         <td>{{$group->created_at}}</td>
-                        <td><small><a href="{{url('employee/delete/'.$group->id)}}" >Delete</a> </small></td>
+                        <td>
+                            <small><a href="{{url('employee/delete/'.$group->id)}}" >Delete</a> - <a   data-toggle="modal" data-target="#addDocument_{{$group->id}}">Add Document</a></small>
+                        </td>
                     </tr>
+
+
+
+
+
+                    <div id="addDocument_{{$group->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Document</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        If you have already uploaded document then your previous document will be replaced.
+                                    </p>
+
+                                    <form action="{{url('update_document/'.$group->id)}}" id="submit_{{$group->id}}" method="post"  enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="email">Documents:</label>
+                                            <input type="file" class="form-control" name="file" required>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="submit_form_file({{$group->id}})" class="btn btn-success"  >Save</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
                     @endforeach
                         @endif
                     </tbody>
@@ -78,7 +127,7 @@
                         <h4 class="modal-title">Add Employee</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="{{url('save_employee')}}" id="submit" method="post">
+                        <form action="{{url('save_employee')}}" id="submit" method="post"  enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Name*:</label>
@@ -102,6 +151,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="email">Documents:</label>
+                                <input type="file" class="form-control" name="file" >
+                            </div>
+
+                            <div class="form-group">
                                 <label for="email">Financial Date*:</label>
                                 <input type="date" class="form-control"name="fi_end_date" id="f_date" required>
 
@@ -122,6 +176,12 @@
 
 
 <script>
+
+    function submit_form_file(id){
+        document.getElementById('submit_'+id).submit();
+    }
+
+
     function submit_form(){
         if(document.getElementById("f_date").value!="" && document.getElementById("name").value!="" && document.getElementById("email").value!="" && document.getElementById("capital").value!=""){
             document.getElementById('submit').submit();
@@ -135,4 +195,6 @@
 
 
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>
