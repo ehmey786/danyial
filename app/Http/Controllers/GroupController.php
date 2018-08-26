@@ -72,8 +72,9 @@ class GroupController extends Controller
     {
         $companies=Company::all();
 
+
         foreach($companies as $company){
-            if($company->ehmey!=1){
+            if($company->notify!=1){
                 $from = \Carbon\Carbon::parse($company->expiry);
                 $to = \Carbon\Carbon::now();
                 if ($to->diffInMonths($from, true) < 1) {
