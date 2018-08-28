@@ -41,6 +41,10 @@ Route::group(['middleware' => ['AdminLogin']], function () {
 
     Route::post('/update_document/{id}','GroupController@update_document');
     Route::get('/','GroupController@index');
+
+
+    Route::post('/edit_company/{id}','GroupController@edit_company');
+
 });
 
 

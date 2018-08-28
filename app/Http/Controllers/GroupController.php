@@ -21,6 +21,10 @@ class GroupController extends Controller
         return view('welcome', compact('data'));
     }
 
+    public function edit_company($id,Request $request){
+        Company::find($id)->update($request->except(['_token']));
+        return redirect()->back();
+    }
 
     public function groups()
     {
@@ -41,7 +45,25 @@ class GroupController extends Controller
         $emp_id = Employee::find($id);
         if ($request->has('file')) {
             $file = $request->file('file');
-            $fileName = $emp_id->id . '.' . $file->getClientOriginalExtension();
+            $fileName = $emp_id->id . '.png' ;
+            $folderPath = public_path('documents/');
+            $file->move($folderPath, $fileName);
+        }
+        elseif($request->has('file2')){
+            $file = $request->file('file2');
+            $fileName = "doc_2_".$emp_id->id . '.png' ;
+            $folderPath = public_path('documents/');
+            $file->move($folderPath, $fileName);
+        }
+        elseif($request->has('file3')){
+            $file = $request->file('file3');
+            $fileName = "doc_3_".$emp_id->id . '.png' ;
+            $folderPath = public_path('documents/');
+            $file->move($folderPath, $fileName);
+        }
+        elseif($request->has('file4')){
+            $file = $request->file('file4');
+            $fileName = "doc_4_".$emp_id->id . '.png' ;
             $folderPath = public_path('documents/');
             $file->move($folderPath, $fileName);
         }

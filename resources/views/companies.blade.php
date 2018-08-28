@@ -59,8 +59,91 @@
 
                         <td>{{count($group->files)}}</td>
                         <td>{{count($group->employees)}}</td>
-                        <td><small><a href="{{url('company/delete/'.$group->id)}}" >Delete</a> - <a href="{{url('company/employees/'.$group->id)}}">Employees</a>  - <a href="{{url('company/files/'.$group->id)}}">Files</a></small></td>
+                        <td><small><a data-toggle="modal" data-target="#edit_company_{{$group->id}}">Edit</a> - <a href="{{url('company/delete/'.$group->id)}}" >Delete</a> - <a href="{{url('company/employees/'.$group->id)}}">Employees</a>  - <a href="{{url('company/files/'.$group->id)}}">Files</a></small></td>
                     </tr>
+
+
+                    <div id="edit_company_{{$group->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Edit Company</h4>
+                                </div>
+                                <form action="{{url('edit_company/'.$group->id)}}" id="submit_{{$group->id}}"
+                                      method="post" enctype="multipart/form-data">
+                                    <div class="modal-body">
+
+
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="email">Name:</label>
+                                            <input type="text" value="{{$group->name}}" class="form-control" name="name"
+                                                   required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Account #</label>
+                                            <input type="text" value="{{$group->a_number}}" class="form-control"
+                                                   name="a_number" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Account Name</label>
+                                            <input type="text" value="{{$group->a_name}}" class="form-control"
+                                                   name="a_name" required>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="email">Expiry</label>
+                                            <input type="text" value="{{$group->expiry}}" class="form-control"
+                                                   name="expiry" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Date of Inc</label>
+                                            <input type="date" class="form-control" value="{{$group->date_inc}}" name="date_inc"  id="f_date"
+                                                   required>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="email">Origin</label>
+                                            <input type="text" class="form-control" value="{{$group->origin}}" name="origin"  id="f_date"
+                                                   required>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="email">Card</label>
+                                            <input type="text" class="form-control" value="{{$group->card}}" name="card"  id="f_date"
+                                                   required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Phone #</label>
+                                            <input type="text" class="form-control" value="{{$group->phone}}" name="phone"  id="f_date"
+                                                   required>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit"
+                                                class="btn btn-success">Save
+                                        </button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+
                     @endforeach
                         @endif
                     </tbody>
