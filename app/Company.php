@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $fillable=['group_id','name','phone','card','origin','date_inc','a_name','a_number','expiry'];
+    protected $fillable=['address','email','zone','issue_date','lic_no','group_id','name','phone','card','origin','date_inc','a_name','a_number','expiry'];
 
 
     public function files()
@@ -22,5 +22,10 @@ class Company extends Model
     public function group()
     {
         return $this->belongsTo('App\Group');
+    }
+
+    public function shareHolders()
+    {
+        return $this->hasMany('App\ShareHolder');
     }
 }

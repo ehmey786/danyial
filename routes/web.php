@@ -20,7 +20,15 @@
 Route::group(['middleware' => ['AdminLogin']], function () {
     Route::post('/save_group','GroupController@save_group');
     Route::get('/group/delete/{id}','GroupController@delete_group');
-    Route::get('/group/companies/{id}','GroupController@group_companies');
+    Route::get('/companies','GroupController@group_companies');
+    //Route::get('/group/companies/{id}','GroupController@group_companies');
+
+
+    Route::get('/task_delete/{id}','GroupController@taskDelete');
+Route::post('/status_change','GroupController@statusChange');
+    Route::post('/save_task','GroupController@saveTask');
+    Route::post('/search_company','GroupController@searchCompany');
+
     Route::get('/company/files/{id}','GroupController@all_files');
     Route::get('/company/employees/{id}','GroupController@all_employees');
 
@@ -33,6 +41,12 @@ Route::group(['middleware' => ['AdminLogin']], function () {
     Route::get('/file/delete/{id}','GroupController@delete_file');
     Route::post('save_company','GroupController@save_company');
 
+    Route::get('company-profile/{id}','GroupController@companyProfile');
+    Route::post('save_sahre_holder','GroupController@saveShareHolders');
+
+    Route::get('delete/share-holder/{id}','GroupController@deleteShareHolder');
+
+
     Route::post('save_file','GroupController@save_file');
 
     Route::get('/groups','GroupController@groups')->name('groups');
@@ -41,7 +55,7 @@ Route::group(['middleware' => ['AdminLogin']], function () {
 
     Route::post('/update_document/{id}','GroupController@update_document');
     Route::get('/','GroupController@index');
-
+    Route::get('/tasks','GroupController@tasks');
 
     Route::post('/edit_company/{id}','GroupController@edit_company');
 

@@ -73,7 +73,8 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/groups') }}">Groups </a>
+                        <a href="{{ url('/tasks') }}">Tasks </a>
+                        <a href="{{ url('/companies') }}">Companies </a>
                         <a href="{{ url('/notifications') }}">Notifications </a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();

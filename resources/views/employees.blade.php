@@ -20,8 +20,8 @@
         <small>(Total Employees: {{count($data['count_employees'])}}) - <a data-toggle="modal" data-target="#myModal">Add
                 new</a> -
             <small>
-                <a href="{{url('group/companies/'.$data['company']->group->id)}}">Back to group
-                    ({{$data['company']->group->name}})</a></small>
+                <a href="{{url('companies')}}">Back to Companies
+                   </a></small>
         </small>
 
     </h2>
@@ -57,24 +57,20 @@
                         <td>{{$group->website}}</td>
                         <td>{{$group->capital}}</td>
                         <td>
-                            @if(file_exists( public_path() . '/documents/' . $group->id . '.png'))
-                                <a class="label label-primary" href="{{asset('documents/' . $group->id . '.png')}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                            @if( $group->image_1 != null)
+                                <a class="label label-primary" href="{{asset('documents/' . $group->image_1)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                             @endif
-                                @if(file_exists( public_path() . '/documents/doc_2_' . $group->id . '.png'))
-                                <a class="label label-primary" href="{{asset('documents/doc_2_' . $group->id . '.png')}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                                @if($group->image_2 != null)
+                                <a class="label label-primary" href="{{asset('documents/' . $group->image_2)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                                 @endif
-                                    @if(file_exists( public_path() . '/documents/doc_3_' . $group->id . '.png'))
-                                <a class="label label-primary" href="{{asset('documents/doc_3_' . $group->id . '.png')}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                                    @if($group->image_3 != null)
+                                <a class="label label-primary" href="{{asset('documents/' .$group->image_3)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                                 @endif
-                                    @if(file_exists( public_path() . '/documents/doc_4_' . $group->id . '.png'))
-                                <a class="label label-primary" href="{{asset('documents/doc_4_' . $group->id . '.png')}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                                    @if($group->image_4 != null)
+                                <a class="label label-primary" href="{{asset('documents/' . $group->image_4)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                                 @endif
 
-                                @if(
-                                !file_exists( public_path() . '/documents/' . $group->id . '.png')
-                                && !file_exists( public_path() . '/documents/doc_2_' . $group->id . '.png')
-                                && !file_exists( public_path() . '/documents/doc_3_' . $group->id . '.png')
-                                && !file_exists( public_path() . '/documents/doc_4_' . $group->id . '.png') )
+                                @if($group->image_1 == null && $group->image_2 == null && $group->image_3 == null && $group->image_4 == null )
 
                                 No Document
                             @endif

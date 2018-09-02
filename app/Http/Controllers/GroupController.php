@@ -6,7 +6,10 @@ use App\Company;
 use App\Employee;
 use App\File;
 use App\Group;
+use App\Notification;
 use App\Notifications\companyExpiary;
+use App\ShareHolder;
+use App\Task;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -21,10 +24,54 @@ class GroupController extends Controller
         return view('welcome', compact('data'));
     }
 
-    public function edit_company($id,Request $request){
-        Company::find($id)->update($request->except(['_token']));
+
+    public function edit_company($id, Request $request)
+    {
+
+        $company = Company::find($id);
+        $from = \Carbon\Carbon::parse($request->expiry);
+        $to = \Carbon\Carbon::now();
+        if ($to->diffInMonths($from, true) > 1) {
+            $notifications = Notification::where('data', 'like', '%' . $company->name . '%')->where('data', 'like', '%' . $company->expiry . '%');
+            echo $company->name;
+            echo $company->expiry;
+            //   dd($notifications->get() );
+            foreach ($notifications->get() as $notification) {
+                //     dd($notification);
+                $notification->delete();
+
+            }
+        }
+
+        $company->update($request->except(['_token']));
         return redirect()->back();
     }
+
+
+    public function statusChange(Request $request)
+    {
+        Task::find($request->id)->update(['status' => $request->status]);
+        return redirect()->back();
+    }
+
+    public function saveTask(Request $request)
+    {
+        Task::create($request->except(['_token']));
+        return redirect()->back();
+    }
+
+
+    public function taskDelete($id){
+        Task::destroy($id);
+        return redirect()->back();
+    }
+
+    public function tasks()
+    {
+        $data['tasks'] = Task::paginate(20);
+        return view('tasks', compact('data'));
+    }
+
 
     public function groups()
     {
@@ -43,31 +90,45 @@ class GroupController extends Controller
     public function update_document($id, Request $request)
     {
         $emp_id = Employee::find($id);
+        $fileName = null;
+        $fileName2 = null;
+        $fileName3 = null;
+        $fileName4 = null;
         if ($request->has('file')) {
             $file = $request->file('file');
-            $fileName = $emp_id->id . '.png' ;
+            $fileName = $emp_id->id . '1_company_document' . '.' . $file->getClientOriginalExtension();
             $folderPath = public_path('documents/');
             $file->move($folderPath, $fileName);
         }
-        elseif($request->has('file2')){
+        if ($request->has('file2')) {
             $file = $request->file('file2');
-            $fileName = "doc_2_".$emp_id->id . '.png' ;
+            $fileName2 = $emp_id->id . '2_company_document' . '.' . $file->getClientOriginalExtension();
             $folderPath = public_path('documents/');
-            $file->move($folderPath, $fileName);
+            $file->move($folderPath, $fileName2);
         }
-        elseif($request->has('file3')){
+        if ($request->has('file3')) {
             $file = $request->file('file3');
-            $fileName = "doc_3_".$emp_id->id . '.png' ;
+            $fileName3 = $emp_id->id . '3_company_document' . '.' . $file->getClientOriginalExtension();
             $folderPath = public_path('documents/');
-            $file->move($folderPath, $fileName);
+            $file->move($folderPath, $fileName3);
         }
-        elseif($request->has('file4')){
+        if ($request->has('file4')) {
             $file = $request->file('file4');
-            $fileName = "doc_4_".$emp_id->id . '.png' ;
+            $fileName4 = $emp_id->id . '4_company_document' . '.' . $file->getClientOriginalExtension();
             $folderPath = public_path('documents/');
             $file->move($folderPath, $fileName);
         }
-        return redirect()->back();
+        if ($fileName != null && $fileName2 != null && $fileName3 != null && $fileName4 != null) {
+            $emp_id->update(['image_1' => $fileName, 'image_2' => $fileName2, 'image_3' => $fileName3, 'image_4' => $fileName4]);
+        } elseif ($fileName == null && $fileName2 != null && $fileName3 != null && $fileName4 != null) {
+            $emp_id->update(['image_2' => $fileName2, 'image_3' => $fileName3, 'image_4' => $fileName4]);
+        } elseif ($fileName == null && $fileName2 == null && $fileName3 != null && $fileName4 != null) {
+            $emp_id->update(['image_3' => $fileName3, 'image_4' => $fileName4]);
+        } elseif ($fileName == null && $fileName2 == null && $fileName3 == null && $fileName4 != null) {
+            $emp_id->update(['image_4' => $fileName4]);
+        }
+
+        //  return redirect()->back();
     }
 
     public function save_employee(Request $request)
@@ -92,11 +153,11 @@ class GroupController extends Controller
 
     public function notificationsAll()
     {
-        $companies=Company::all();
+        $companies = Company::all();
 
 
-        foreach($companies as $company){
-            if($company->notify!=1){
+        foreach ($companies as $company) {
+            if ($company->notify != 1) {
                 $from = \Carbon\Carbon::parse($company->expiry);
                 $to = \Carbon\Carbon::now();
                 if ($to->diffInMonths($from, true) < 1) {
@@ -104,11 +165,10 @@ class GroupController extends Controller
                 }
             }
 
-            $company->notify=1;
+            $company->notify = 1;
             $company->save();
 
         }
-
 
 
         $data['notifications'] = Auth::user()->notifications()->orderby('id', 'desc')->take(100)->paginate(20);
@@ -116,23 +176,55 @@ class GroupController extends Controller
         return view('notifications', compact('data'));
     }
 
-    public function group_companies($id)
+
+    public function companyProfile($id)
     {
-        $data['companies'] = Group::find($id)->companies()->paginate(10);
-        $data['group'] = Group::find($id);
+        $data['company'] = Company::find($id);
+
+        return view('company-profile', compact('data'));
+    }
+
+
+    public function deleteShareHolder($id)
+    {
+        ShareHolder::destroy($id);
+
+        return redirect()->back();
+    }
+
+
+    public function saveShareHolders(Request $request)
+    {
+        ShareHolder::create($request->except(['_token']));
+        return redirect()->back();
+    }
+
+    public function group_companies(Request $request)
+    {
+        if (!empty($request->search_input)) {
+            $data['companies'] = Group::find(1)->companies()
+                ->where('name', 'like', '%' . $request->search_input . '%')
+                ->orwhere('zone', 'like', '%' . $request->search_input . '%')
+                ->orwhere('origin', 'like', '%' . $request->search_input . '%')
+                ->paginate(1000);
+            $data['group'] = Group::find(1);
+            //  dd(1);
+            return view('companies', compact('data'));
+        }
+
+
+        $data['companies'] = Group::find(1)->companies()->paginate(10);
+        $data['group'] = Group::find(1);
         return view('companies', compact('data'));
     }
 
     public function save_company(Request $request)
     {
-         try
-        {
+        try {
             $company = Company::create($request->except(['_token']));
 
             return redirect()->back();
-        }
-          catch(\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             \Session::flash('error', $exception->getMessage());
             return redirect()->back();
         }
