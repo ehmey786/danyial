@@ -122,7 +122,7 @@
                                             <div class="form-group">
                                                 <label for="email">Vat Date:</label>
                                                 <input type="date" value="{{$group->vat_date}}" class="form-control"
-                                                       name="name"
+                                                       name="vat_date"
                                                        required>
                                             </div>
 
