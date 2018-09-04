@@ -263,7 +263,7 @@ class GroupController extends Controller
         ]);
 
 
-        //return redirect()->back();
+        return redirect()->back();
     }
 
 
