@@ -37,7 +37,7 @@ class GroupController extends Controller
         $vatFrom = \Carbon\Carbon::parse($request->vat_date);
 
 
-        if ($to->diffInMonths($vatFrom, true) > 1) {
+        if ($to->diffInDays($vatFrom, true) > 15) {
             $notifications = Notification::where('data', 'like', '%VAT%')->where('data', 'like', '%' . $company->name . '%')->where('data', 'like', '%' . $company->vat_date . '%');
 
             foreach ($notifications->get() as $notification) {
@@ -232,6 +232,8 @@ class GroupController extends Controller
                 ->where('name', 'like', '%' . $request->search_input . '%')
                 ->orwhere('zone', 'like', '%' . $request->search_input . '%')
                 ->orwhere('origin', 'like', '%' . $request->search_input . '%')
+                ->orwhere('a_number', 'like', '%' . $request->search_input . '%')
+                ->orwhere('main_activity', 'like', '%' . $request->search_input . '%')
                 ->paginate(1000);
             $data['group'] = Group::find(1);
             //  dd(1);
