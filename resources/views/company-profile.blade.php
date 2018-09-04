@@ -266,6 +266,11 @@
                         <td>{{$data['company']->address}}</td>
                     </tr>
                     <tr>
+                        <td>Vat Date</td>
+
+                        <td>{{$data['company']->vat_date}}</td>
+                    </tr>
+                    <tr>
                         <td>Other Activity</td>
 
                         <td>{{$data['company']->other_activity}}</td>

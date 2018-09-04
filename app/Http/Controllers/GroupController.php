@@ -32,6 +32,21 @@ class GroupController extends Controller
         $company = Company::find($id);
         $from = \Carbon\Carbon::parse($request->expiry);
         $to = \Carbon\Carbon::now();
+
+
+        $vatFrom = \Carbon\Carbon::parse($request->vat_date);
+
+
+        if ($to->diffInMonths($vatFrom, true) > 1) {
+            $notifications = Notification::where('data', 'like', '%VAT%')->where('data', 'like', '%' . $company->name . '%')->where('data', 'like', '%' . $company->vat_date . '%');
+
+            foreach ($notifications->get() as $notification) {
+                //     dd($notification);
+                $notification->delete();
+
+            }
+        }
+
         if ($to->diffInMonths($from, true) > 1) {
             $notifications = Notification::where('data', 'like', '%' . $company->name . '%')->where('data', 'like', '%' . $company->expiry . '%');
             echo $company->name;
@@ -167,7 +182,16 @@ class GroupController extends Controller
                 }
             }
 
-            $company->notify = 1;
+
+            if ($company->vat_notify != 1) {
+                $from = \Carbon\Carbon::parse($company->vat_date);
+                $to = \Carbon\Carbon::now();
+                if ($to->diffInDays($from, true) < 15) {
+                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> VAT DATE  is going to expire on this date " . $company->vat_date));
+                }
+            }
+
+            $company->vat_notify = 1;
             $company->save();
 
         }

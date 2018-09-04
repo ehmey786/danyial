@@ -120,6 +120,14 @@
                                             </div>
 
                                             <div class="form-group">
+                                                <label for="email">Vat Date:</label>
+                                                <input type="text" value="{{$group->vat_date}}" class="form-control"
+                                                       name="name"
+                                                       required>
+                                            </div>
+
+
+                                            <div class="form-group">
                                                 <label for="email">Account #</label>
                                                 <input type="text" value="{{$group->a_number}}" class="form-control"
                                                        name="a_number" required>
@@ -210,7 +218,7 @@
                     <div class="row" style="padding:20px;">
 
                         @csrf
-                        <div class="col-lg-12 col-md-12 ">
+                        <div class="col-lg-6 col-md-6 ">
                         <div class="form-group">
                             <label for="email">Name:</label>
                             <input type="text" class="form-control" name="name" id="email" required>
@@ -218,10 +226,21 @@
                                    value="{{$data['group']->id}}" required>
                         </div>
                         </div>
+
                         <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
-                                <label for="email">Account Name:</label>
-                                <input type="text" class="form-control" name="a_name" required>
+                                <label for="email">Name:</label>
+                                <input type="text" class="form-control" name="name" id="email" required>
+                                <input type="text" style="display:none;" class="form-control" name="group_id"
+                                       value="{{$data['group']->id}}" required>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Vat Date:</label>
+                                <input type="text" class="form-control" name="vat_date" required>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 ">
