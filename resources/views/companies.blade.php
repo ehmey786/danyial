@@ -227,7 +227,13 @@
                         </div>
                         </div>
 
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Account Name:</label>
+                                <input type="text" class="form-control" name="a_name" id="email" required>
 
+                            </div>
+                        </div>
 
 
                         <div class="col-lg-6 col-md-6 ">
