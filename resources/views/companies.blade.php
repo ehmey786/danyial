@@ -121,7 +121,7 @@
 
                                             <div class="form-group">
                                                 <label for="email">Vat Date:</label>
-                                                <input type="text" value="{{$group->vat_date}}" class="form-control"
+                                                <input type="date" value="{{$group->vat_date}}" class="form-control"
                                                        name="name"
                                                        required>
                                             </div>
@@ -227,14 +227,7 @@
                         </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 ">
-                            <div class="form-group">
-                                <label for="email">Name:</label>
-                                <input type="text" class="form-control" name="name" id="email" required>
-                                <input type="text" style="display:none;" class="form-control" name="group_id"
-                                       value="{{$data['group']->id}}" required>
-                            </div>
-                        </div>
+
 
 
                         <div class="col-lg-6 col-md-6 ">
