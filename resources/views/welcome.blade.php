@@ -90,8 +90,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    SME BusinessMen Services <br>
-                    <b><small style="font-size:14px">Groups <label class="label label-primary">{{$data['groups_count']}}</label> - </small>  <small style="font-size:14px">Companies <label class="label label-primary">{{$data['company_count']}}</label> - </small> <small style="font-size:14px">Employees <label class="label label-primary">{{$data['employee_count']}}</label> - </small>  <small style="font-size:14px">Files <label class="label label-primary">{{$data['files_count']}}</label> </small></b>
+                    SME Businessmen Services <br>
+                    <b><small style="font-size:14px">Tasks <label class="label label-primary">{{$data['task_count']}}</label> - </small>  <small style="font-size:14px">Companies <label class="label label-primary">{{$data['company_count']}}</label> - </small> <small style="font-size:14px">Employees <label class="label label-primary">{{$data['employee_count']}}</label> - </small>  <small style="font-size:14px">Files <label class="label label-primary">{{$data['files_count']}}</label> </small></b>
                 </div>
 
             </div>

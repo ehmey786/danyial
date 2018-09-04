@@ -80,7 +80,7 @@
                         <td>
                             <small> <a
                                         href="{{url('employee/delete/'.$group->id)}}">Delete</a> - <a
-                                        data-toggle="modal" data-target="#addDocument_{{$group->id}}">Add Document</a>
+                                        data-toggle="modal" data-target="#addDocument_{{$group->id}}">Add Document</a> - <a href="{{url('employee/dependents/'.$group->id)}}">  Dependents</a>
                             </small>
                         </td>
                     </tr>
@@ -154,6 +154,12 @@
         {{$data['employees']->links()}}
     @endif
 
+
+
+
+
+
+
 </div>
 
 
@@ -191,10 +197,6 @@
                         <input type="text" class="form-control" name="capital" id="capital" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Documents:</label>
-                        <input type="file" class="form-control" name="file">
-                    </div>
 
                     <div class="form-group">
                         <label for="email">Visa Expiry Date*:</label>
@@ -231,6 +233,76 @@
     }
 </script>
 
+
+
+<div id="shareHolder" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <form action="{{url('save_dependent')}}" id="submit" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Dependent</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding:20px;">
+
+                        @csrf
+                        <div class="col-lg-12 col-md-12 ">
+                            <div class="form-group">
+                                <label for="email">Name:</label>
+                                <input type="text" class="form-control" name="name" id="email" required>
+                                <input type="text" style="display:none;" class="form-control" value="{{$data['company']->id}}"name="employee"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 ">
+                            <div class="form-group">
+                                <label for="email">Relation:</label>
+                                <input type="text" class="form-control" name="relation" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Passport Expiry:</label>
+                                <input type="date" class="form-control" name="passport_expiry" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Visa Expiry:</label>
+                                <input type="date" class="form-control" name="visa_expiry_expiry" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 ">
+                            <div class="form-group">
+                                <label for="email">Document:</label>
+                                <input type="file" class="form-control" name="document" required>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" onclick=" " class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

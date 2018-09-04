@@ -46,8 +46,12 @@ Route::post('/status_change','GroupController@statusChange');
 
     Route::get('delete/share-holder/{id}','GroupController@deleteShareHolder');
 
-
+Route::get('employee/dependents/{id}','GroupController@dependents');
+Route::post('save_dependent','GroupController@saveDependent');
     Route::post('save_file','GroupController@save_file');
+
+
+    Route::get('/dependent/delete/{id}','GroupController@deleteDependent');
 
     Route::get('/groups','GroupController@groups')->name('groups');
 

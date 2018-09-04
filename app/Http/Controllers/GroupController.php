@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Dpendent;
 use App\Employee;
 use App\File;
 use App\Group;
@@ -17,7 +18,7 @@ class GroupController extends Controller
 {
     public function index()
     {
-        $data['groups_count'] = Group::all()->count();
+        $data['task_count'] = Task::all()->count();
         $data['company_count'] = Company::all()->count();
         $data['employee_count'] = Employee::all()->count();
         $data['files_count'] = File::all()->count();
@@ -61,7 +62,8 @@ class GroupController extends Controller
     }
 
 
-    public function taskDelete($id){
+    public function taskDelete($id)
+    {
         Task::destroy($id);
         return redirect()->back();
     }
@@ -128,7 +130,7 @@ class GroupController extends Controller
             $emp_id->update(['image_4' => $fileName4]);
         }
 
-        //  return redirect()->back();
+        return redirect()->back();
     }
 
     public function save_employee(Request $request)
@@ -236,6 +238,46 @@ class GroupController extends Controller
         $data['company'] = Company::find($id);
         $data['files'] = Company::find($id)->files()->paginate(10);
         return view('files', compact('data'));
+    }
+
+
+    public function saveDependent(Request $request)
+    {
+
+
+        $file = $request->file('document');
+        $fileName = $request->name . "-" . time() . '.' . $file->getClientOriginalExtension();
+        $folderPath = public_path('files/');
+
+
+        $file->move($folderPath, $fileName);
+
+
+        Dpendent::create([
+            'employee_id' => $request->employee_id,
+            'name' => $request->name,
+            'visa_expiry_expiry' => $request->visa_expiry_expiry,
+            'passport_expiry' => $request->passport_expiry,
+            'relation' => $request->relation,
+            'document' => $fileName
+        ]);
+
+
+        //return redirect()->back();
+    }
+
+
+    public function deleteDependent($id)
+    {
+        Dpendent::destroy($id);
+        return redirect()->back();
+    }
+
+    public function dependents($id, Request $request)
+    {
+        $data['dependents'] = Employee::find($id)->dependents()->paginate(10);
+        $data['employee'] = Employee::find($id);
+        return view('dependents', compact('data'));
     }
 
 

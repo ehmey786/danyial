@@ -47,7 +47,7 @@
                     {{--<th>Card</th>--}}
                     {{--<th>Phone #</th>--}}
                     <th>Created At</th>
-
+                    <th>Main Activity</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -66,7 +66,7 @@
                     {{--<td>{{$group->card}}</td>--}}
                     {{--<td>{{$group->phone}}</td>--}}
                     <td>{{ \Carbon\Carbon::parse($data['company']->created_at)->format('M d, Y')}}</td>
-
+                    <td>{{$data['company']->main_activity}}</td>
 
                     <td>
                         <small><a data-toggle="modal" data-target="#edit_company_{{$data['company']->id}}">Edit</a> - <a
@@ -265,7 +265,11 @@
 
                         <td>{{$data['company']->address}}</td>
                     </tr>
+                    <tr>
+                        <td>Other Activity</td>
 
+                        <td>{{$data['company']->other_activity}}</td>
+                    </tr>
 
                     </tbody>
                 </table>

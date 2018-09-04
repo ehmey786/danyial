@@ -32,12 +32,12 @@ class CompanyColumns extends Migration
     public function down()
     {
         Schema::table('companies',function ($table){
-            $table->string('zone');
-            $table->string('issue_date');
-            $table->string('lic_no');
-            $table->string('email');
-            $table->string('main_activity');
-            $table->string('address');
+            $table->dropColumn('zone');
+            $table->dropColumn('issue_date');
+            $table->dropColumn('lic_no');
+            $table->dropColumn('email');
+            $table->dropColumn('main_activity');
+            $table->dropColumn('address');
         });
     }
 }

@@ -17,7 +17,7 @@
 <div class="container">
     <h2>Company: {{$data['company']->name}}
         <small>(Total Files:{{count($data['files'])}}) - <a data-toggle="modal" data-target="#myModal">Add new</a> - <small>
-                <a href="{{url('group/companies/'.$data['company']->group->id)}}">Back to group ({{$data['company']->group->name}})</a></small></small>
+                <a href="{{url('company-profile/'.$data['company']->id)}}">Back to Company ({{$data['company']->name}})</a></small></small>
     </h2>
     <hr>
 

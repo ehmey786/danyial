@@ -61,6 +61,7 @@
                     <th>Created At</th>
                     <th>Files</th>
                     <th>Employees</th>
+                    <th>Main Activity</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -86,6 +87,7 @@
 
                             <td>{{count($group->files)}}</td>
                             <td>{{count($group->employees)}}</td>
+                            <td>{{$group->main_activity}}</td>
                             <td>
                                 <small><a data-toggle="modal" data-target="#edit_company_{{$group->id}}">Edit</a> - <a
                                             href="{{url('company/delete/'.$group->id)}}">Delete</a> - <a
@@ -208,11 +210,13 @@
                     <div class="row" style="padding:20px;">
 
                         @csrf
+                        <div class="col-lg-12 col-md-12 ">
                         <div class="form-group">
                             <label for="email">Name:</label>
                             <input type="text" class="form-control" name="name" id="email" required>
                             <input type="text" style="display:none;" class="form-control" name="group_id"
                                    value="{{$data['group']->id}}" required>
+                        </div>
                         </div>
                         <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
@@ -277,6 +281,20 @@
                             <div class="form-group">
                                 <label for="email">Expiry:</label>
                                 <input type="date" class="form-control" name="expiry" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Main Activity:</label>
+                                <input type="text" class="form-control" name="main_activity" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Other Activity:</label>
+                                <input type="text" class="form-control" name="other_activity" required>
                             </div>
                         </div>
 
