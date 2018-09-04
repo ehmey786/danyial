@@ -49,8 +49,7 @@ class GroupController extends Controller
 
         if ($to->diffInMonths($from, true) > 1) {
             $notifications = Notification::where('data', 'like', '%' . $company->name . '%')->where('data', 'like', '%' . $company->expiry . '%');
-            echo $company->name;
-            echo $company->expiry;
+
             //   dd($notifications->get() );
             foreach ($notifications->get() as $notification) {
                 //     dd($notification);
@@ -192,6 +191,7 @@ class GroupController extends Controller
             }
 
             $company->vat_notify = 1;
+            $company->notify = 1;
             $company->save();
 
         }
