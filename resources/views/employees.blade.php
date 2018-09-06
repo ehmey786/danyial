@@ -38,6 +38,7 @@
                 <th>Nationality</th>
                 <th>Document</th>
                 <th>Visa Expiry Date</th>
+                <th>Passport Expiry Date</th>
                 <th>Created At</th>
                 <th>Action</th>
             </tr>
@@ -76,6 +77,7 @@
                             @endif
                         </td>
                         <td>{{$group->fi_end_date}}</td>
+                        <td>{{$group->passport_expiry_date}}</td>
                         <td>{{$group->created_at}}</td>
                         <td>
                             <small> <a

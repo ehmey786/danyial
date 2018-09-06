@@ -14,7 +14,7 @@ class VisaExpiry extends Migration
     public function up()
     {
         Schema::table('employees',function($table){
-            $table->string('passport_expiry_notify','1000');
+            $table->string('passport_expiry_notify','1000')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class VisaExpiry extends Migration
     public function down()
     {
         Schema::table('employees',function($table){
-            $table->dropColumn('passport_expiry_notify','1000');
+            $table->dropColumn('passport_expiry_notify','1000')->nullable();
         });
     }
 }
