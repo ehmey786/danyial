@@ -77,7 +77,7 @@
                             @endif
                         </td>
                         <td>{{$group->fi_end_date}}</td>
-                        <td>{{$group->passport_expiry_date}}</td>
+                        <td>{{$group->passport_expiry}}</td>
                         <td>{{$group->created_at}}</td>
                         <td>
                             <small> <a
