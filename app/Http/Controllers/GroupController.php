@@ -132,7 +132,7 @@ class GroupController extends Controller
             $file = $request->file('file4');
             $fileName4 = $emp_id->id . '4_company_document' . '.' . $file->getClientOriginalExtension();
             $folderPath = public_path('documents/');
-            $file->move($folderPath, $fileName);
+            $file->move($folderPath, $fileName4);
         }
         if ($fileName != null && $fileName2 != null && $fileName3 != null && $fileName4 != null) {
             $emp_id->update(['image_1' => $fileName, 'image_2' => $fileName2, 'image_3' => $fileName3, 'image_4' => $fileName4]);
@@ -172,7 +172,24 @@ class GroupController extends Controller
         $companies = Company::all();
 
 
+        $employees = Employee::all();
+
+        foreach ($employees as $employee) {
+            if ($employee->passport_expiry_notify != 1) {
+                $from = \Carbon\Carbon::parse($employee->passport_expiry);
+                $to = \Carbon\Carbon::now();
+                if ($to->diffInMonths($from, true) < 1) {
+                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $employee->name . "</b> Employee Passport is going to <span style='display:none'> " . $employee->name . "-passport_expiry-" .$employee->passport_expiry."</span> expire on this date " . $employee->passport_expiry));
+                }
+                $employee->passport_expiry_notify = 1;
+                $employee->save();
+            }
+        }
+
+
+
         foreach ($companies as $company) {
+
             if ($company->notify != 1) {
                 $from = \Carbon\Carbon::parse($company->expiry);
                 $to = \Carbon\Carbon::now();
@@ -246,10 +263,17 @@ class GroupController extends Controller
         return view('companies', compact('data'));
     }
 
+
+    public function editTask($id, Request $request)
+    {
+        Task::find($id)->update($request->except(['_token']));
+        return redirect()->back();
+    }
+
+
     public function save_company(Request $request)
     {
-        try
-        {
+        try {
             $company = Company::create($request->except(['_token']));
 
             return redirect()->back();

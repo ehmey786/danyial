@@ -145,8 +145,26 @@
 
                                         </div>
 
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="email">Establishment Card</label>
+                                                <input type="text" class="form-control"
+                                                       value="{{$data['company']->card}}"
+                                                       name="card" id="f_date"
+                                                       required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="email">Establishment Card Date</label>
+                                                <input type="date" class="form-control"
+                                                       value="{{$data['company']->card_date}}"
+                                                       name="card_date" id="f_date"
+                                                       required>
+                                            </div>
+                                        </div>
 
-                                        <div class="col-lg-12 col-md-12">
+                                        <div class="col-lg-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="email">Issue Date</label>
                                                 <input type="date" class="form-control"
@@ -157,15 +175,7 @@
 
                                         </div>
 
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="form-group">
-                                                <label for="email">Card</label>
-                                                <input type="text" class="form-control"
-                                                       value="{{$data['company']->card}}"
-                                                       name="card" id="f_date"
-                                                       required>
-                                            </div>
-                                        </div>
+
                                         <div class="col-lg-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="email">Phone #</label>
@@ -244,10 +254,18 @@
                         <td>{{$data['company']->date_inc}}</td>
                     </tr>
                     <tr>
-                        <td>Card</td>
+                        <td>Establishment Card</td>
 
                         <td>{{$data['company']->card}}</td>
                     </tr>
+
+                    <tr>
+                        <td>Establishment Card Date</td>
+
+                        <td>{{$data['company']->card_date}}</td>
+                    </tr>
+
+
                     <tr>
                         <td>Phone #</td>
 

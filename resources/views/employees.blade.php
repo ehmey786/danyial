@@ -203,6 +203,10 @@
                         <input type="date" class="form-control" name="fi_end_date" id="f_date" required>
                     </div>
 
+                    <div class="form-group">
+                        <label for="email">Passport Expiry Date*:</label>
+                        <input type="date" class="form-control" name="passport_expiry" id="passport_expiry" required>
+                    </div>
 
                 </form>
             </div>

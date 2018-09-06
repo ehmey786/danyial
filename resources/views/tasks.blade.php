@@ -47,6 +47,7 @@
                     <th>Name of Concern</th>
                     {{--<th>Card</th>--}}
                     {{--<th>Phone #</th>--}}
+                    <th>Remarks</th>
                     <th>Comment</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -69,6 +70,7 @@
                             {{--<td>{{$group->date_inc}}</td>--}}
                             <td>{{$group->p_name}}</td>
                             <td>{{$group->n_concern}}</td>
+                            <td>{{$group->remarks}}</td>
                             {{--<td>{{$group->card}}</td>--}}
                             {{--<td>{{$group->phone}}</td>--}}
                             <td>{{ $group->comments}}</td>
@@ -82,82 +84,43 @@
                             </td>
 
                             <td>
-                                <small><a
-                                            href="{{url('task_delete/'.$group->id)}}">Delete</a> </small>
+                                <small>
+                                    <a data-toggle="modal" data-target="#edit_task_{{$group->id}}">Edit</a> -
+                                    <a href="{{url('task_delete/'.$group->id)}}">Delete</a> </small>
                             </td>
                         </tr>
 
 
-                        <div id="edit_company_{{$group->id}}" class="modal fade" role="dialog">
+                        <div id="edit_task_{{$group->id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Edit Company</h4>
+                                        <h4 class="modal-title">Edit Task</h4>
                                     </div>
-                                    <form action="{{url('edit_company/'.$group->id)}}" id="submit_{{$group->id}}"
+                                    <form action="{{url('edit_task/'.$group->id)}}" id="submit_{{$group->id}}"
                                           method="post" enctype="multipart/form-data">
                                         <div class="modal-body">
-
+<input value="{{$group->id}}" name="task_id" style="display:none">
 
                                             @csrf
-                                            <div class="form-group">
-                                                <label for="email">Name:</label>
-                                                <input type="text" value="{{$group->name}}" class="form-control"
-                                                       name="name"
-                                                       required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="email">Account #</label>
-                                                <input type="text" value="{{$group->a_number}}" class="form-control"
-                                                       name="a_number" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="email">Account Name</label>
-                                                <input type="text" value="{{$group->a_name}}" class="form-control"
-                                                       name="a_name" required>
-                                            </div>
 
 
                                             <div class="form-group">
-                                                <label for="email">Expiry</label>
-                                                <input type="text" value="{{$group->expiry}}" class="form-control"
-                                                       name="expiry" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="email">Date of Inc</label>
-                                                <input type="date" class="form-control" value="{{$group->date_inc}}"
-                                                       name="date_inc" id="f_date"
-                                                       required>
+                                                <label for="email">Remarks #</label>
+                                                <input type="text" value="{{$group->remarks}}" class="form-control"
+                                                       name="remarks" required>
                                             </div>
 
 
-                                            <div class="form-group">
-                                                <label for="email">Origin</label>
-                                                <input type="text" class="form-control" value="{{$group->origin}}"
-                                                       name="origin" id="f_date"
-                                                       required>
-                                            </div>
 
 
-                                            <div class="form-group">
-                                                <label for="email">Card</label>
-                                                <input type="text" class="form-control" value="{{$group->card}}"
-                                                       name="card" id="f_date"
-                                                       required>
-                                            </div>
 
-                                            <div class="form-group">
-                                                <label for="email">Phone #</label>
-                                                <input type="text" class="form-control" value="{{$group->phone}}"
-                                                       name="phone" id="f_date"
-                                                       required>
-                                            </div>
+
+
+
 
                                         </div>
                                         <div class="modal-footer">

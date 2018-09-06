@@ -142,7 +142,7 @@
 
                                             <div class="form-group">
                                                 <label for="email">Expiry</label>
-                                                <input type="text" value="{{$group->expiry}}" class="form-control"
+                                                <input type="date" value="{{$group->expiry}}" class="form-control"
                                                        name="expiry" required>
                                             </div>
 
@@ -163,11 +163,19 @@
 
 
                                             <div class="form-group">
-                                                <label for="email">Card</label>
+                                                <label for="email">Establishment Card</label>
                                                 <input type="text" class="form-control" value="{{$group->card}}"
                                                        name="card" id="f_date"
                                                        required>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label for="email">Establishment Card Date</label>
+                                                <input type="date" class="form-control" value="{{$group->card_date}}"
+                                                       name="card" id="card_date"
+                                                       required>
+                                            </div>
+
 
                                             <div class="form-group">
                                                 <label for="email">Phone #</label>
@@ -249,7 +257,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 ">
+                        <div class="col-lg-12 col-md-12 ">
                             <div class="form-group">
                                 <label for="email">Phone:</label>
                                 <input type="text" class="form-control" name="phone" required>
@@ -258,8 +266,15 @@
 
                         <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
-                                <label for="email">Card:</label>
+                                <label for="email">Establishment Card:</label>
                                 <input type="text" class="form-control" name="card" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Establishment Card Date:</label>
+                                <input type="date" class="form-control" name="card_date" required>
                             </div>
                         </div>
 

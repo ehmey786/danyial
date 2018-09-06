@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class VatDate extends Migration
+class VisaExpiry extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class VatDate extends Migration
      */
     public function up()
     {
-        Schema::table('companies',function($table){
-            $table->string('vat_date');
-            $table->string('vat_notify')->default('0');
+        Schema::table('employees',function($table){
+            $table->string('passport_expiry_notify','1000');
         });
     }
 
@@ -26,9 +25,8 @@ class VatDate extends Migration
      */
     public function down()
     {
-        Schema::table('companies',function ($table){
-            $table->dropColumn('vat_date');
-            $table->dropColumn('vat_notify');
+        Schema::table('employees',function($table){
+            $table->dropColumn('passport_expiry_notify','1000');
         });
     }
 }

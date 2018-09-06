@@ -24,6 +24,12 @@ Route::group(['middleware' => ['AdminLogin']], function () {
     //Route::get('/group/companies/{id}','GroupController@group_companies');
 
 
+
+
+
+
+
+    Route::post('/edit_task/{id}','GroupController@editTask');
     Route::get('/task_delete/{id}','GroupController@taskDelete');
 Route::post('/status_change','GroupController@statusChange');
     Route::post('/save_task','GroupController@saveTask');
