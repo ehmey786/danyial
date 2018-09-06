@@ -179,7 +179,7 @@ class GroupController extends Controller
                 $from = \Carbon\Carbon::parse($employee->passport_expiry);
                 $to = \Carbon\Carbon::now();
                 if ($to->diffInMonths($from, true) < 1) {
-                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $employee->name . "</b> Employee Passport is going to <span style='display:none'> " . $employee->name . "-passport_expiry-" .$employee->passport_expiry."</span> expire on this date " . $employee->passport_expiry));
+                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" .$employee->company->name." => ". $employee->name . "</b> Employee Passport is going to <span style='display:none'> " . $employee->name . "-passport_expiry-" .$employee->passport_expiry."</span> expire on this date " . $employee->passport_expiry));
                 }
                 $employee->passport_expiry_notify = 1;
                 $employee->save();
