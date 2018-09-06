@@ -59,16 +59,16 @@
                         <td>{{$group->capital}}</td>
                         <td>
                             @if( $group->image_1 != null)
-                                <a class="label label-primary" href="{{asset('documents/' . $group->image_1)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                                <a class="label label-primary" title="VISA" href="{{asset('documents/' . $group->image_1)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                             @endif
                                 @if($group->image_2 != null)
-                                <a class="label label-primary" href="{{asset('documents/' . $group->image_2)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                                <a class="label label-primary" title="PASSPORT"href="{{asset('documents/' . $group->image_2)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                                 @endif
                                     @if($group->image_3 != null)
-                                <a class="label label-primary" href="{{asset('documents/' .$group->image_3)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                                <a class="label label-primary"title="EMIRATES ID" href="{{asset('documents/' .$group->image_3)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                                 @endif
                                     @if($group->image_4 != null)
-                                <a class="label label-primary" href="{{asset('documents/' . $group->image_4)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
+                                <a class="label label-primary" title="OTHER"href="{{asset('documents/' . $group->image_4)}}" download><i class="glyphicon glyphicon-download-alt"></i></a>
                                 @endif
 
                                 @if($group->image_1 == null && $group->image_2 == null && $group->image_3 == null && $group->image_4 == null )
@@ -111,22 +111,22 @@
                                           method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="email">Document 1:</label>
+                                            <label for="email">VISA:</label>
                                             <input type="file" class="form-control" name="file" >
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="email">Document 2:</label>
+                                            <label for="email">PASSPORT:</label>
                                             <input type="file" class="form-control" name="file2" >
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="email">Document 3:</label>
+                                            <label for="email">EMIRATES ID:</label>
                                             <input type="file" class="form-control" name="file3" >
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="email">Document 4:</label>
+                                            <label for="email">OTHER:</label>
                                             <input type="file" class="form-control" name="file4" >
                                         </div>
 
