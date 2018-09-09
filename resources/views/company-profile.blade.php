@@ -202,6 +202,13 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="email">Financial Ending Date:</label>
+                                                <input type="date" class="form-control" value="{{$data['company']->fi_ending_date}}" name="fi_ending_date" required>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-12 ">
                                             <div class="form-group">
                                                 <label for="email">Address</label>
@@ -292,6 +299,11 @@
                         <td>Other Activity</td>
 
                         <td>{{$data['company']->other_activity}}</td>
+                    </tr>
+                    <tr>
+                        <td> Financial Ending Date</td>
+
+                        <td>{{$data['company']->fi_ending_date}}</td>
                     </tr>
 
                     </tbody>
@@ -439,7 +451,10 @@
         document.getElementById('submit').submit();
     }
 </script>
-
+<hr style="margin-bottom: 20px;">
+<footer style="text-align: center;position: absolute;width: 100%;bottom: 15;">
+    <p style="padding-bottom:18px;">    Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
+</footer>
 
 </body>
 </html>

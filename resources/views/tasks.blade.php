@@ -33,7 +33,7 @@
     <hr style="margin-bottom:35px;margin-top:35px;">
 
     <div class="content">
-        <div class="table-responsive">
+        <div class="table-responsive" style="min-height: 400px;">
             <table class="table">
                 <thead>
                 <tr>
@@ -85,7 +85,7 @@
 
                             <td>
                                 <small>
-                                    <a data-toggle="modal" data-target="#edit_task_{{$group->id}}">Edit</a> -
+                                    <a data-toggle="modal" data-target="#edit_task_{{$group->id}}">Edit Remarks</a> -
                                     <a href="{{url('task_delete/'.$group->id)}}">Delete</a> </small>
                             </td>
                         </tr>
@@ -261,6 +261,9 @@
     }
 </script>
 
-
+<hr style="margin-bottom: 25px;">
+<footer style="text-align: center;position: absolute;width: 100%;bottom: 15;">
+    <p style="padding-bottom:18px;"> Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
+</footer>
 </body>
 </html>

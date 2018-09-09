@@ -24,8 +24,9 @@ Route::group(['middleware' => ['AdminLogin']], function () {
     //Route::get('/group/companies/{id}','GroupController@group_companies');
 
 
+    Route::post('/edit_employee/{id}','GroupController@editEmployee');
 
-
+    Route::post('/edit_dependent/{id}','GroupController@editDependent');
 
 
 

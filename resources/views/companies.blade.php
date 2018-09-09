@@ -44,7 +44,7 @@
     <hr style="margin-bottom:35px;margin-top:35px;">
 
     <div class="content">
-        <div class="table-responsive">
+        <div class="table-responsive" style="min-height: 400px;">
             <table class="table">
                 <thead>
                 <tr>
@@ -162,6 +162,12 @@
                                             </div>
 
 
+                                                <div class="form-group">
+                                                    <label for="email">Financial Ending Date:</label>
+                                                    <input type="date" class="form-control" value="{{$group->fi_ending_date}}" name="fi_ending_date" required>
+                                                </div>
+
+
                                             <div class="form-group">
                                                 <label for="email">Establishment Card</label>
                                                 <input type="text" class="form-control" value="{{$group->card}}"
@@ -257,10 +263,17 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 col-md-12 ">
+                        <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
                                 <label for="email">Phone:</label>
                                 <input type="text" class="form-control" name="phone" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">Financial Ending Date:</label>
+                                <input type="date" class="form-control" name="fi_ending_date" required>
                             </div>
                         </div>
 
@@ -351,6 +364,11 @@
     }
 </script>
 
+<hr style="margin-bottom: 25px;">
+<footer style="text-align: center;position: absolute;width: 100%;bottom: 15;">
+  <p style="padding-bottom:18px;">  Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
+</footer>
 
+<style>th{    white-space: nowrap;}</style>
 </body>
 </html>

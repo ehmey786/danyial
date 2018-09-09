@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container " style="min-height: 90vh;">
     <h2>
 
         Company: {{$data['company']->name}} -
@@ -27,7 +27,7 @@
     </h2>
     <hr>
 
-    <div class="content">
+    <div class="content table-responsive">
         <table class="table">
             <thead>
             <tr>
@@ -80,9 +80,13 @@
                         <td>{{$group->passport_expiry}}</td>
                         <td>{{$group->created_at}}</td>
                         <td>
-                            <small> <a
+
+
+
+
+                            <small><a  data-toggle="modal" data-target="#edit_{{$group->id}}">Edit</a> - <a
                                         href="{{url('employee/delete/'.$group->id)}}">Delete</a> - <a
-                                        data-toggle="modal" data-target="#addDocument_{{$group->id}}">Add Document</a> - <a href="{{url('employee/dependents/'.$group->id)}}">  Dependents</a>
+                                        data-toggle="modal" data-target="#addDocument_{{$group->id}}"> Document</a> - <a href="{{url('employee/dependents/'.$group->id)}}">  Dependents</a>
                             </small>
                         </td>
                     </tr>
@@ -143,7 +147,45 @@
                         </div>
                     </div>
 
+                    <div id="edit_{{$group->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
 
+                            <!-- Modal content-->
+                            <div class="modal-content"><form action="{{url('edit_employee/'.$group->id)}}" id="submit_{{$group->id}}"
+                                                             method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Edit</h4>
+                                </div>
+                                <div class="modal-body">
+
+
+
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="email">Visa Expiry Date*:</label>
+                                            <input type="date" class="form-control" value="{{$group->fi_end_date}}" name="fi_end_date" id="f_date" required="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Passport Expiry Date*:</label>
+                                            <input type="date" class="form-control" value="{{$group->passport_expiry}}"  name="passport_expiry" id="passport_expiry" required="">
+                                        </div>
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit"
+                                            class="btn btn-success">Save
+                                    </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
 
 
 
@@ -163,6 +205,7 @@
 
 
 </div>
+
 
 
 <div id="myModal" class="modal fade" role="dialog">
@@ -309,7 +352,12 @@
 
     </div>
 </div>
+<style>th{    white-space: nowrap;}</style>
 
+<hr style="margin-bottom: 20px;">
+<footer style="text-align: center;position: absolute;width: 100%;bottom: 15;">
+    <p style="padding-bottom:18px;">    Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
+</footer>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

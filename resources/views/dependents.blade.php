@@ -60,13 +60,52 @@
                         </td>
                         <td>{{$group->created_at}}</td>
                         <td>
-                            <small> <a
+                            <small><a data-toggle="modal" data-target="#edit_{{$group->id}}">Edit</a>- <a
                                         href="{{url('dependent/delete/'.$group->id)}}">Delete</a>
                             </small>
                         </td>
                     </tr>
 
 
+                    <div id="edit_{{$group->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content"><form action="{{url('edit_dependent/'.$group->id)}}" id="submit_{{$group->id}}"
+                                                             method="post" enctype="multipart/form-data">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edit</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+
+
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="email">Visa Expiry Date*:</label>
+                                            <input type="date" class="form-control" value="{{$group->visa_expiry_expiry}}" name="visa_expiry_expiry" id="f_date" required="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Passport Expiry Date*:</label>
+                                            <input type="date" class="form-control" value="{{$group->passport_expiry}}"  name="passport_expiry" id="passport_expiry" required="">
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit"
+                                                class="btn btn-success">Save
+                                        </button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
                 @endforeach
             @endif
             </tbody>

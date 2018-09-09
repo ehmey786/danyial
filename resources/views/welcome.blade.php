@@ -21,12 +21,12 @@
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
-                height: 100vh;
+                height: 90vh;
                 margin: 0;
             }
 
             .full-height {
-                height: 100vh;
+                height: 87vh;
             }
 
             .flex-center {
@@ -99,5 +99,9 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
+        <hr style="margin-bottom: 20px;">
+        <footer style="text-align: center;position: absolute;width: 100%;bottom: 15;">
+            <p style="padding-bottom:18px;">    Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
+        </footer>
     </body>
 </html>

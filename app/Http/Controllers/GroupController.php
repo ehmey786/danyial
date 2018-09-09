@@ -26,6 +26,101 @@ class GroupController extends Controller
     }
 
 
+    public function editEmployee($id, Request $request)
+    {
+
+        $company = Employee::find($id);
+        $fromVisa = \Carbon\Carbon::parse($request->fi_end_date);
+        $fromPassport = \Carbon\Carbon::parse($request->passport_expiry);
+        $to = \Carbon\Carbon::now();
+
+        $deletePassportExpiry = $company->name . '-passport_expiry-' . $company->passport_expiry;
+        $deleteVisaExpiry = $company->name . '-visa_expiry-' . $company->fi_end_date;
+
+        if ($to->diffInDays($fromVisa, true) > 30) {
+            $notifications = Notification::where('data', 'like', '%' . $deleteVisaExpiry . '%');
+
+            foreach ($notifications->get() as $notification) {
+                //     dd($notification);
+                $notification->delete();
+
+            }
+        }
+
+
+        if ($to->diffInDays($fromPassport, true) > 30) {
+            $notifications = Notification::where('data', 'like', '%' . $deletePassportExpiry . '%');
+
+            foreach ($notifications->get() as $notification) {
+                //     dd($notification);
+                $notification->delete();
+
+            }
+        }
+
+        $fromPassport = \Carbon\Carbon::parse($company->passport_expiry);
+        $to = \Carbon\Carbon::now();
+        if ($to->diffInMonths($fromPassport, true) < 1) {
+            $company->update(['passport_expiry_notify' => 0]);
+        }
+
+
+        $fromVisa = \Carbon\Carbon::parse($company->fi_end_date);
+        if ($to->diffInMonths($fromVisa, true) < 1) {
+            $company->update(['fi_ending_notify' => 0]);//dd($to->diffInMonths($fromVisa, true));
+        }
+
+        $company->update($request->except(['_token']));
+        return redirect()->back();
+    }
+
+
+    public function editDependent($id, Request $request)
+    {
+
+        $company = Dpendent::find($id);
+        $fromVisa = \Carbon\Carbon::parse($request->visa_expiry_expiry);
+        $fromPassport = \Carbon\Carbon::parse($request->passport_expiry);
+        $to = \Carbon\Carbon::now();
+
+        $deletePassportExpiry = $company->name . '-_dependent_passport_expiry-' . $company->passport_expiry;
+        $deleteVisaExpiry = $company->name . '-_dependent_visa_expiry-' . $company->visa_expiry_expiry;
+
+        if ($fromVisa > \Carbon\Carbon::now()->addMonth(1)) {
+            $notifications = Notification::where('data', 'like', '%' . $deleteVisaExpiry . '%');
+
+            foreach ($notifications->get() as $notification) {
+                $notification->delete();
+
+            }
+        }
+
+
+        if ($fromPassport > \Carbon\Carbon::now()->addMonth(1)) {
+            $notifications = Notification::where('data', 'like', '%' . $deletePassportExpiry . '%');
+
+            foreach ($notifications->get() as $notification) {
+                $notification->delete();
+
+            }
+        }
+
+        $fromPassport = \Carbon\Carbon::parse($company->passport_expiry);
+        $to = \Carbon\Carbon::now();
+        if ($to->diffInMonths($fromPassport, true) < 1) {
+            $company->update(['passport_expiry_notify' => 0]);
+        }
+
+
+        $fromVisa = \Carbon\Carbon::parse($company->fi_end_date);
+        if ($to->diffInMonths($fromVisa, true) < 1) {
+            $company->update(['visa_expiry_notify' => 0]);//dd($to->diffInMonths($fromVisa, true));
+        }
+
+        $company->update($request->except(['_token']));
+        return redirect()->back();
+    }
+
     public function edit_company($id, Request $request)
     {
 
@@ -169,35 +264,73 @@ class GroupController extends Controller
 
     public function notificationsAll()
     {
-        $companies = Company::all();
+        $companies = Company::where('notify', '!=', 1)->orwhere('vat_notify', '!=', 1)->get();
+        $employees = Employee::where('passport_expiry_notify', '!=', 0)->orwhere('fi_ending_notify', '!=', 1)->get();
+        $dpendents = Dpendent::where('passport_expiry_notify', 0)->orwhere('visa_expiry_notify', 0)->get();
 
 
-        $employees = Employee::all();
+        foreach ($dpendents as $dpendent) {
+            if ($dpendent->passport_expiry_notify != 1) {
+                $from = \Carbon\Carbon::parse($dpendent->passport_expiry);
+                $to = \Carbon\Carbon::now();
+                if ($from < \Carbon\Carbon::now()->addMonth(1)) {
+                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " =></b>  Dependent <b>" . $dpendent->name . "</b> Employee Passport is going to <span style='display:none'> " . $dpendent->name . "-_dependent_passport_expiry-" . $dpendent->passport_expiry . "</span> expire on this date " . $dpendent->passport_expiry));
+                }
+                $dpendent->passport_expiry_notify = 1;
+                $dpendent->save();
+            }
+
+
+            if ($dpendent->visa_expiry_notify != 1) {
+                $from = \Carbon\Carbon::parse($dpendent->visa_expiry_expiry);
+                $to = \Carbon\Carbon::now();
+                if ($from < \Carbon\Carbon::now()->addMonth(1)) {
+                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " =></b>  Dependent <b>" . $dpendent->name . "</b> Employee Visa is going to <span style='display:none'> " . $dpendent->name . "-_dependent_visa_expiry-" . $dpendent->visa_expiry_expiry . "</span> expire on this date " . $dpendent->visa_expiry_expiry));
+                }
+                $dpendent->visa_expiry_notify = 1;
+                $dpendent->save();
+            }
+        }
+
+
+
+
 
         foreach ($employees as $employee) {
             if ($employee->passport_expiry_notify != 1) {
                 $from = \Carbon\Carbon::parse($employee->passport_expiry);
                 $to = \Carbon\Carbon::now();
                 if ($to->diffInMonths($from, true) < 1) {
-                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" .$employee->company->name." => ". $employee->name . "</b> Employee Passport is going to <span style='display:none'> " . $employee->name . "-passport_expiry-" .$employee->passport_expiry."</span> expire on this date " . $employee->passport_expiry));
+                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $employee->company->name . " => " . $employee->name . "</b> Employee Passport is going to <span style='display:none'> " . $employee->name . "-passport_expiry-" . $employee->passport_expiry . "</span> expire on this date " . $employee->passport_expiry));
                 }
                 $employee->passport_expiry_notify = 1;
                 $employee->save();
             }
+
+            if ($employee->fi_ending_notify != 1) {
+
+                $from = \Carbon\Carbon::parse($employee->fi_end_date);
+                $to = \Carbon\Carbon::now();
+                if ($to->diffInMonths($from, true) < 1) {
+                    \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $employee->company->name . " => " . $employee->name . "</b> Employee Visa is going to <span style='display:none'> " . $employee->name . "-visa_expiry-" . $employee->fi_end_date . "</span> expire on this date " . $employee->fi_end_date));
+                }
+                $employee->fi_ending_notify = 1;
+                $employee->save();
+            }
+
         }
 
 
-
         foreach ($companies as $company) {
-
             if ($company->notify != 1) {
                 $from = \Carbon\Carbon::parse($company->expiry);
                 $to = \Carbon\Carbon::now();
                 if ($to->diffInMonths($from, true) < 1) {
                     \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> is going to expire on this date " . $company->expiry));
                 }
+                $company->notify = 1;
+                $company->save();
             }
-
 
             if ($company->vat_notify != 1) {
                 $from = \Carbon\Carbon::parse($company->vat_date);
@@ -205,12 +338,9 @@ class GroupController extends Controller
                 if ($to->diffInDays($from, true) < 15) {
                     \Notification::send(Auth::user(), new companyExpiary("This company <b>" . $company->name . "</b> VAT DATE  is going to expire on this date " . $company->vat_date));
                 }
+                $company->vat_notify = 1;
+                $company->save();
             }
-
-            $company->vat_notify = 1;
-            $company->notify = 1;
-            $company->save();
-
         }
 
 
@@ -302,7 +432,7 @@ class GroupController extends Controller
 
 
         $file->move($folderPath, $fileName);
-
+        $start = new \Carbon\Carbon($request->visa_expiry_expiry);
 
         Dpendent::create([
             'employee_id' => $request->employee_id,

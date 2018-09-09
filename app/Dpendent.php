@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dpendent extends Model
 {
-    protected $fillable=['employee_id','name','relation','passport_expiry','visa_expiry_expiry','document'];
+    protected $fillable=['visa_expiry_notify','passport_expiry_notify','employee_id','name','relation','passport_expiry','visa_expiry_expiry','document'];
 
     public function employee()
     {
