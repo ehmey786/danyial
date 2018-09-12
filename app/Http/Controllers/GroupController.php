@@ -274,7 +274,7 @@ class GroupController extends Controller
                 $from = \Carbon\Carbon::parse($dpendent->passport_expiry);
                 $to = \Carbon\Carbon::now();
                 if ($from < \Carbon\Carbon::now()->addMonth(1)) {
-                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " =></b>  Dependent <b>" . $dpendent->name . "</b> Employee Passport is going to <span style='display:none'> " . $dpendent->name . "-_dependent_passport_expiry-" . $dpendent->passport_expiry . "</span> expire on this date " . $dpendent->passport_expiry));
+                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " => company(".$dpendent->employee->company->name.")</b>  Dependent <b>" . $dpendent->name . "</b>  Passport is going to <span style='display:none'> " . $dpendent->name . "-_dependent_passport_expiry-" . $dpendent->passport_expiry . "</span> expire on this date " . $dpendent->passport_expiry));
                 }
                 $dpendent->passport_expiry_notify = 1;
                 $dpendent->save();
@@ -285,7 +285,7 @@ class GroupController extends Controller
                 $from = \Carbon\Carbon::parse($dpendent->visa_expiry_expiry);
                 $to = \Carbon\Carbon::now();
                 if ($from < \Carbon\Carbon::now()->addMonth(1)) {
-                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " =></b>  Dependent <b>" . $dpendent->name . "</b> Employee Visa is going to <span style='display:none'> " . $dpendent->name . "-_dependent_visa_expiry-" . $dpendent->visa_expiry_expiry . "</span> expire on this date " . $dpendent->visa_expiry_expiry));
+                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " => company (".$dpendent->employee->company->name.")</b>  Dependent <b>" . $dpendent->name . "</b>  Visa is going to <span style='display:none'> " . $dpendent->name . "-_dependent_visa_expiry-" . $dpendent->visa_expiry_expiry . "</span> expire on this date " . $dpendent->visa_expiry_expiry));
                 }
                 $dpendent->visa_expiry_notify = 1;
                 $dpendent->save();
