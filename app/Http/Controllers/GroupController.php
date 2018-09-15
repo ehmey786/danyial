@@ -492,9 +492,16 @@ class GroupController extends Controller
     public function delete_employee($id)
     {
         $employee = Employee::find($id);
+
+
+        $dependents = $employee->dependents;
+
+        foreach($dependents as $dependent){
+            Notification::where('data','like','%'.$dependent->name.'-_dependent%')->delete();
+        }
         $delete = "=> ".$employee->name;
         Notification::where('data','like','%'.$delete.'%')->delete();
-       Employee::destroy($id);
+        Employee::destroy($id);
 
 
        return redirect()->back();
