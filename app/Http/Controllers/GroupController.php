@@ -450,7 +450,10 @@ class GroupController extends Controller
 
     public function deleteDependent($id)
     {
+        $dependent = Dpendent::find($id);
+        Notification::where('data','like','%'.$dependent->name.'-_dependent%')->delete();
         Dpendent::destroy($id);
+
         return redirect()->back();
     }
 
@@ -488,8 +491,13 @@ class GroupController extends Controller
 
     public function delete_employee($id)
     {
-        Employee::destroy($id);
-        return redirect()->back();
+        $employee = Employee::find($id);
+        $delete = "=> ".$employee->name;
+        Notification::where('data','like','%'.$delete.'%')->delete();
+       Employee::destroy($id);
+
+
+       return redirect()->back();
     }
 
     public function save_file(Request $request)
