@@ -72,12 +72,9 @@
         <main class="py-4">
             @yield('content')
         </main>
-<footer>
-        <div class="footer-copyright text-center py-3">© 2018 Copyright:
-            <a href="https://mdbootstrap.com/bootstrap-tutorial/"> MDBootstrap.com</a>
-        </div>
-        <!-- Copyright -->
 
+        <footer style="text-align: center;position: absolute;width: 100%;bottom: 15;">
+            <p style="padding-bottom:18px;">    Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
         </footer>
     </div>
 </body>

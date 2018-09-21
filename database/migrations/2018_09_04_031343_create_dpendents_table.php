@@ -15,7 +15,7 @@ class CreateDpendentsTable extends Migration
     {
         Schema::create('dpendents', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('employee_id');
+            $table->integer('employee_id')->unsigned();
             $table->string('name');
             $table->string('relation');
             $table->string('passport_expiry');

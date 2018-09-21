@@ -17,7 +17,21 @@
         <div class="container">
             <h2>Notifications <small>(Total:{{$data['notifications_count']}})  - <a href="{{url('/')}}">Home</a></small> </h2>
             <hr>
+            <br>
+            <form method="get" action="{{url('search_notification')}}" enctype="multipart/form-data">
 
+                <div class="input-group">
+                    <input type="text" name="search_input" class="form-control" placeholder="Search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <hr>
+            <br>
             <div class="content">
                 <table class="table">
                     <thead>

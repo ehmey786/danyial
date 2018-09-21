@@ -35,6 +35,7 @@ Route::group(['middleware' => ['AdminLogin']], function () {
 Route::post('/status_change','GroupController@statusChange');
     Route::post('/save_task','GroupController@saveTask');
     Route::post('/search_company','GroupController@searchCompany');
+    Route::get('/search_notification','GroupController@notificationsAll');
 
     Route::get('/company/files/{id}','GroupController@all_files');
     Route::get('/company/employees/{id}','GroupController@all_employees');

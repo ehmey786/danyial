@@ -262,7 +262,7 @@ class GroupController extends Controller
     }
 
 
-    public function notificationsAll()
+    public function notificationsAll(Request $request)
     {
         $companies = Company::where('notify', '!=', 1)->orwhere('vat_notify', '!=', 1)->get();
         $employees = Employee::where('passport_expiry_notify', '!=', 0)->orwhere('fi_ending_notify', '!=', 1)->get();
@@ -343,8 +343,17 @@ class GroupController extends Controller
             }
         }
 
+        if (!empty($request->search_input)) {
+            $data['notifications'] = Auth::user()->notifications()->orderby('id', 'desc')
+                ->where('data', 'like', '%' . $request->search_input . '%')
+                ->paginate(1000);
+            $data['group'] = Group::find(1);
+            //  dd(1);
 
-        $data['notifications'] = Auth::user()->notifications()->orderby('id', 'desc')->take(100)->paginate(20);
+        }else{
+            $data['notifications'] = Auth::user()->notifications()->orderby('id', 'desc')->take(100)->paginate(20);
+        }
+
         $data['notifications_count'] = count(Auth::user()->notifications);
         return view('notifications', compact('data'));
     }
@@ -506,6 +515,9 @@ class GroupController extends Controller
 
        return redirect()->back();
     }
+
+
+
 
     public function save_file(Request $request)
     {
