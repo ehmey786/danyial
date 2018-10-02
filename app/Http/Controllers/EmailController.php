@@ -17,7 +17,7 @@ class EmailController extends Controller
         Log::info("aa");
         $users = ShareHolder::where('dob',Carbon::now()->toDateString())->get();
         foreach($users as $user){
-            Mail::to("ahmedalvi83@gmail.com")->send(new BirthdayEmails("<b>".$user->name."</b> SME wishes you Happy Birthday on this speial ocassion."));
+            Mail::to($user)->send(new BirthdayEmails("<b>".$user->name."</b> SME wishes you Happy Birthday on this speial ocassion."));
         }
 
     }
