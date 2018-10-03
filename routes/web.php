@@ -18,7 +18,7 @@
 
 
 
-Route::get('/emails','EmailController@sendBirdayEmail');
+Route::get('/emails','EmailController@sendExpiryEmail');
 Route::group(['middleware' => ['AdminLogin']], function () {
     Route::post('/save_group','GroupController@save_group');
     Route::get('/group/delete/{id}','GroupController@delete_group');

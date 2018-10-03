@@ -318,8 +318,9 @@
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Email</th>
                         <th>Phone</th>
+                        <th>Dob</th>
+                        <th>Email</th>
                         <th>Share</th>
                         <th>Position</th>
                         <th>Nationality</th>
@@ -334,8 +335,10 @@
 
 
                             <td>{{$shareHolder->name}}</td>
-                            <td>{{$shareHolder->email}}</td>
                             <td>{{$shareHolder->contact}}</td>
+                            <td>{{$shareHolder->dob}}</td>
+                            <td>{{$shareHolder->email}}</td>
+
                             <td>{{$shareHolder->share}}</td>
                             <td>{{$shareHolder->position}}</td>
                             <td>{{$shareHolder->natoionality}}</td>
@@ -403,6 +406,12 @@
                             <div class="form-group">
                                 <label for="email">Phone:</label>
                                 <input type="text" class="form-control" name="contact" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 ">
+                            <div class="form-group">
+                                <label for="email">DOB:</label>
+                                <input type="date" class="form-control" name="dob" required>
                             </div>
                         </div>
 
