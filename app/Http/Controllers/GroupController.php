@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Company;
 use App\Dpendent;
 use App\Employee;
@@ -11,6 +12,7 @@ use App\Notification;
 use App\Notifications\companyExpiary;
 use App\ShareHolder;
 use App\Task;
+use App\User;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -23,6 +25,21 @@ class GroupController extends Controller
         $data['employee_count'] = Employee::all()->count();
         $data['files_count'] = File::all()->count();
         return view('welcome', compact('data'));
+    }
+
+
+    public function taskDetails($id, Request $request)
+    {
+        $data['task_detail'] = Task::find($id);
+        return view('task_details', compact('data'));
+
+    }
+
+
+    public function saveComment($id, Request $request)
+    {
+        Comment::create($request->except('_token'));
+        return redirect()->back();
     }
 
 
@@ -177,9 +194,35 @@ class GroupController extends Controller
         return redirect()->back();
     }
 
-    public function tasks()
+    public function deleteUser($id)
     {
-        $data['tasks'] = Task::paginate(20);
+        if(User::find($id)->role_id ==1){
+            return redirect()->back();
+        }
+        User::destroy($id);
+        return redirect()->back();
+
+    }
+
+    public function statusChangeCompany(Request $request)
+    {
+        Company::find($request->id)->update(['status' => $request->status]);
+        return redirect()->back();
+
+    }
+
+
+    public function tasks($id = null)
+    {
+        $data['tasks'] = null;
+        $data['users'] = null;
+        if ($id == null) {
+            $data['tasks'] = Task::paginate(20);
+        } else {
+            $data['tasks'] = User::find($id)->tasks()->paginate(20);
+            $data['users'] = User::find($id);
+        }
+
         return view('tasks', compact('data'));
     }
 
@@ -262,6 +305,20 @@ class GroupController extends Controller
     }
 
 
+    public function users()
+    {
+        $data['tasks'] = User::paginate(20);
+        return view('users', compact('data'));
+    }
+
+
+    public function saveUser(Request $request)
+    {
+        User::create(['rold_id'=>2,'name' => $request->name, 'email' => $request->email, 'password' => bcrypt($request->password)]);
+        return redirect()->back();
+    }
+
+
     public function notificationsAll(Request $request)
     {
         $companies = Company::where('notify', '!=', 1)->orwhere('vat_notify', '!=', 1)->get();
@@ -274,7 +331,7 @@ class GroupController extends Controller
                 $from = \Carbon\Carbon::parse($dpendent->passport_expiry);
                 $to = \Carbon\Carbon::now();
                 if ($from < \Carbon\Carbon::now()->addMonth(1)) {
-                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " => company(".$dpendent->employee->company->name.")</b>  Dependent <b>" . $dpendent->name . "</b>  Passport is going to <span style='display:none'> " . $dpendent->name . "-_dependent_passport_expiry-" . $dpendent->passport_expiry . "</span> expire on this date " . $dpendent->passport_expiry));
+                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " => company(" . $dpendent->employee->company->name . ")</b>  Dependent <b>" . $dpendent->name . "</b>  Passport is going to <span style='display:none'> " . $dpendent->name . "-_dependent_passport_expiry-" . $dpendent->passport_expiry . "</span> expire on this date " . $dpendent->passport_expiry));
                 }
                 $dpendent->passport_expiry_notify = 1;
                 $dpendent->save();
@@ -285,15 +342,12 @@ class GroupController extends Controller
                 $from = \Carbon\Carbon::parse($dpendent->visa_expiry_expiry);
                 $to = \Carbon\Carbon::now();
                 if ($from < \Carbon\Carbon::now()->addMonth(1)) {
-                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " => company (".$dpendent->employee->company->name.")</b>  Dependent <b>" . $dpendent->name . "</b>  Visa is going to <span style='display:none'> " . $dpendent->name . "-_dependent_visa_expiry-" . $dpendent->visa_expiry_expiry . "</span> expire on this date " . $dpendent->visa_expiry_expiry));
+                    \Notification::send(Auth::user(), new companyExpiary("This Employee <b>" . $dpendent->employee->name . " => company (" . $dpendent->employee->company->name . ")</b>  Dependent <b>" . $dpendent->name . "</b>  Visa is going to <span style='display:none'> " . $dpendent->name . "-_dependent_visa_expiry-" . $dpendent->visa_expiry_expiry . "</span> expire on this date " . $dpendent->visa_expiry_expiry));
                 }
                 $dpendent->visa_expiry_notify = 1;
                 $dpendent->save();
             }
         }
-
-
-
 
 
         foreach ($employees as $employee) {
@@ -350,7 +404,7 @@ class GroupController extends Controller
             $data['group'] = Group::find(1);
             //  dd(1);
 
-        }else{
+        } else {
             $data['notifications'] = Auth::user()->notifications()->orderby('id', 'desc')->take(100)->paginate(20);
         }
 
@@ -460,7 +514,7 @@ class GroupController extends Controller
     public function deleteDependent($id)
     {
         $dependent = Dpendent::find($id);
-        Notification::where('data','like','%'.$dependent->name.'-_dependent%')->delete();
+        Notification::where('data', 'like', '%' . $dependent->name . '-_dependent%')->delete();
         Dpendent::destroy($id);
 
         return redirect()->back();
@@ -505,18 +559,16 @@ class GroupController extends Controller
 
         $dependents = $employee->dependents;
 
-        foreach($dependents as $dependent){
-            Notification::where('data','like','%'.$dependent->name.'-_dependent%')->delete();
+        foreach ($dependents as $dependent) {
+            Notification::where('data', 'like', '%' . $dependent->name . '-_dependent%')->delete();
         }
-        $delete = "=> ".$employee->name;
-        Notification::where('data','like','%'.$delete.'%')->delete();
+        $delete = "=> " . $employee->name;
+        Notification::where('data', 'like', '%' . $delete . '%')->delete();
         Employee::destroy($id);
 
 
-       return redirect()->back();
+        return redirect()->back();
     }
-
-
 
 
     public function save_file(Request $request)

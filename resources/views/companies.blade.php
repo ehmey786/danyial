@@ -61,6 +61,7 @@
                     <th>Created At</th>
                     <th>Files</th>
                     <th>Employees</th>
+                    <th>Status</th>
                     <th>Main Activity</th>
                     <th>Delete</th>
                 </tr>
@@ -87,6 +88,11 @@
 
                             <td>{{count($group->files)}}</td>
                             <td>{{count($group->employees)}}</td>
+                            <td><select class="form-control input-xs" onchange="changeStatus(this.value,{{$group->id}})">
+                                    <option value="Active" @if($group->status == "Active") selected @endif>Active</option>
+                                    <option value="Deactive" @if($group->status == "Deactive") selected @endif>Deactive</option>
+                                    <option value="Potential" @if($group->status == "Potential") selected @endif>Potential</option>
+                                </select></td>
                             <td>{{$group->main_activity}}</td>
                             <td>
                                 <small><a data-toggle="modal" data-target="#edit_company_{{$group->id}}">Edit</a> - <a
@@ -370,5 +376,27 @@
 </footer>
 
 <style>th{    white-space: nowrap;}</style>
+
+
+
+<form id="status_form" method="post" action="status_change_company">
+    @csrf
+    <input type="text" name="id" id="status_id" style="display:none;">
+    <input type="text" name="status" id="status_val" style="display:none;"></form>
+
+<script>
+    function submit_form() {
+        document.getElementById('submit').submit();
+    }
+
+
+    function changeStatus(val,id){
+
+        document.getElementById('status_id').value=id;
+        document.getElementById('status_val').value=val;
+        document.getElementById('status_form').submit();
+    }
+</script>
+
 </body>
 </html>

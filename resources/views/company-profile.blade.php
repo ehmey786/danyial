@@ -48,6 +48,7 @@
                     {{--<th>Phone #</th>--}}
                     <th>Created At</th>
                     <th>Main Activity</th>
+
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -68,7 +69,6 @@
                     <td>{{ \Carbon\Carbon::parse($data['company']->created_at)->format('M d, Y')}}</td>
                     <td>{{$data['company']->main_activity}}</td>
 
-                    <td>
                         <small><a data-toggle="modal" data-target="#edit_company_{{$data['company']->id}}">Edit</a> - <a
                                     href="{{url('company/employees/'.$data['company']->id)}}">Employees</a> - <a
                                     href="{{url('company/files/'.$data['company']->id)}}">Files</a></small>
@@ -205,7 +205,9 @@
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="email">Financial Ending Date:</label>
-                                                <input type="date" class="form-control" value="{{$data['company']->fi_ending_date}}" name="fi_ending_date" required>
+                                                <input type="date" class="form-control"
+                                                       value="{{$data['company']->fi_ending_date}}"
+                                                       name="fi_ending_date" required>
                                             </div>
                                         </div>
 
@@ -302,8 +304,24 @@
                     </tr>
                     <tr>
                         <td> Financial Ending Date</td>
-
                         <td>{{$data['company']->fi_ending_date}}</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Status</td>
+                        <td><select class="form-control input-xs"
+                                    onchange="changeStatus(this.value,{{$data['company']->id}})">
+                                <option value="Active" @if($data['company']->status == "Active") selected @endif>Active
+                                </option>
+                                <option value="Deactive" @if($data['company']->status == "Deactive") selected @endif>
+                                    Deactive
+                                </option>
+                                <option value="Potential" @if($data['company']->status == "Potential") selected @endif>
+                                    Potential
+                                </option>
+                            </select></td>
+                        <td>
                     </tr>
 
                     </tbody>
@@ -312,7 +330,10 @@
         </div>
 
         <div class="panel panel-primary">
-            <div class="panel-heading">Share Holders <button data-toggle="modal" data-target="#shareHolder" class="btn btn-default btn-xs">Add Share Holder</button></div>
+            <div class="panel-heading">Share Holders
+                <button data-toggle="modal" data-target="#shareHolder" class="btn btn-default btn-xs">Add Share Holder
+                </button>
+            </div>
             <div class="panel-body">
                 <table class="table table-striped">
                     <thead>
@@ -333,33 +354,33 @@
                     </tr>
                     </thead>
                     <tbody>
-@if(count($data['company']->shareHolders) != 0)
-                    @foreach($data['company']->shareHolders as $shareHolder)
+                    @if(count($data['company']->shareHolders) != 0)
+                        @foreach($data['company']->shareHolders as $shareHolder)
+                            <tr>
+
+
+                                <td>{{$shareHolder->name}}</td>
+                                <td>{{$shareHolder->contact}}</td>
+                                <td>{{$shareHolder->dob}}</td>
+                                <td>{{$shareHolder->lease_date}}</td>
+                                <td>{{$shareHolder->lisc_expiry}}</td>
+                                <td>{{$shareHolder->passport_expiry}}</td>
+                                <td>{{$shareHolder->visa_expiry}}</td>
+
+                                <td>{{$shareHolder->email}}</td>
+
+                                <td>{{$shareHolder->share}}</td>
+                                <td>{{$shareHolder->position}}</td>
+                                <td>{{$shareHolder->natoionality}}</td>
+                                <td>{{$shareHolder->pre_natoionality}}</td>
+                                <td><a href="{{url('delete/share-holder/'.$shareHolder->id)}}">Delete</a></td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-
-
-                            <td>{{$shareHolder->name}}</td>
-                            <td>{{$shareHolder->contact}}</td>
-                            <td>{{$shareHolder->dob}}</td>
-                            <td>{{$shareHolder->lease_date}}</td>
-                            <td>{{$shareHolder->lisc_expiry}}</td>
-                            <td>{{$shareHolder->passport_expiry}}</td>
-                            <td>{{$shareHolder->visa_expiry}}</td>
-
-                            <td>{{$shareHolder->email}}</td>
-
-                            <td>{{$shareHolder->share}}</td>
-                            <td>{{$shareHolder->position}}</td>
-                            <td>{{$shareHolder->natoionality}}</td>
-                            <td>{{$shareHolder->pre_natoionality}}</td>
-                            <td><a href="{{url('delete/share-holder/'.$shareHolder->id)}}">Delete</a></td>
+                            <td>No Data</td>
                         </tr>
-                    @endforeach
-    @else
-    <tr><td>No Data</td></tr>
-    @endif
-
-
+                    @endif
 
 
                     </tbody>
@@ -372,8 +393,6 @@
 
 
 </div>
-
-
 
 
 <div id="shareHolder" class="modal fade" role="dialog">
@@ -391,12 +410,13 @@
 
                         @csrf
                         <div class="col-lg-12 col-md-12 ">
-                        <div class="form-group">
-                            <label for="email">Name:</label>
-                            <input type="text" class="form-control" name="name" id="email" required>
-                            <input type="text" style="display:none;" class="form-control" value="{{$data['company']->id}}"name="company_id"
-                                     required>
-                        </div>
+                            <div class="form-group">
+                                <label for="email">Name:</label>
+                                <input type="text" class="form-control" name="name" id="email" required>
+                                <input type="text" style="display:none;" class="form-control"
+                                       value="{{$data['company']->id}}" name="company_id"
+                                       required>
+                            </div>
                         </div>
                         <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
@@ -454,8 +474,6 @@
                         </div>
 
 
-
-
                         <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
                                 <label for="email">Email:</label>
@@ -477,10 +495,6 @@
                         </div>
 
 
-
-
-
-
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -494,8 +508,6 @@
 </div>
 
 
-
-
 <script>
     function submit_form() {
         document.getElementById('submit').submit();
@@ -503,8 +515,28 @@
 </script>
 <hr style="margin-bottom: 20px;">
 <footer style="text-align: center;position: absolute;width: 100%;bottom: 15;">
-    <p style="padding-bottom:18px;">    Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
+    <p style="padding-bottom:18px;"> Powered by <span style="color:darkorange;"><b>Avast</b></span></p>
 </footer>
+
+
+<form id="status_form" method="post" action="{{url('status_change_company')}}">
+    @csrf
+    <input type="text" name="id" id="status_id" style="display:none;">
+    <input type="text" name="status" id="status_val" style="display:none;"></form>
+
+<script>
+    function submit_form() {
+        document.getElementById('submit').submit();
+    }
+
+
+    function changeStatus(val,id){
+
+        document.getElementById('status_id').value=id;
+        document.getElementById('status_val').value=val;
+        document.getElementById('status_form').submit();
+    }
+</script>
 
 </body>
 </html>

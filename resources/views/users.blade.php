@@ -18,16 +18,10 @@
 
 
     <h2>
-        Tasks:
+        Users:
         <small>
             (Total Tasks:{{count($data['tasks'])}}) -
-            <a data-toggle="modal" data-target="#myModal">Add new Task</a>
-
-            @if(!empty($data['users']))
-                - {{$data['users']->name}}
-                @endif
-            - <a href="{{url('/')}}"> Back to
-                Home</a>
+            <a data-toggle="modal" data-target="#myModal">Add new User</a> - <a href="{{url('/')}}"> Home</a>
 
 
         </small>
@@ -43,19 +37,17 @@
                 <thead>
                 <tr>
                     {{--<th>Id</th>--}}
-                    <th>Date</th>
-                    <th>Zone</th>
+                    <th>Name</th>
+                    <th>Email</th>
                     {{--<th>Account Name</th>--}}
-                    <th>Company Name</th>
+
                     {{--<th>Date of Inc</th>--}}
-                    <th>Process Name</th>
-                    <th>Name of Concern</th>
+                    <th>Task</th>
+                    <th>Created At</th>
                     {{--<th>Card</th>--}}
                     {{--<th>Phone #</th>--}}
-                    <th>Remarks</th>
-                    <th>Comment</th>
-                    <th>Status</th>
                     <th>Action</th>
+
 
                 </tr>
                 </thead>
@@ -68,31 +60,20 @@
                     @foreach($data['tasks'] as $group)
                         <tr>
                             {{--<td>{{$group->id}}</td>--}}
-                            <td>{{$group->_date}}</td>
-                            <td>{{$group->zone}}</td>
+                            <td>{{$group->name}}</td>
+                            <td>{{$group->email}}</td>
                             {{--<td>{{$group->a_name}}</td>--}}
-                            <td>{{$group->c_name}}</td>
+                            <td><a href="{{url('user/'.$group->id.'/tasks')}}"><label class="label label-primary">Tasks : {{$group->tasks()->count()}} </label></a></td>
                             {{--<td>{{$group->date_inc}}</td>--}}
-                            <td><a href="{{url('task_detail/'.$group->id)}}"> {{$group->p_name}} </a></td>
-                            <td>{{$group->n_concern}}</td>
-                            <td>{{$group->remarks}}</td>
+                            <td>{{$group->created_at}}</td>
+
                             {{--<td>{{$group->card}}</td>--}}
                             {{--<td>{{$group->phone}}</td>--}}
-                            <td>{{ $group->comments}}</td>
+                            <td> <a href="{{url('user/'.$group->id.'/delete/')}}">Delete</a></td>
 
-                            <td>
-                                <select class="form-control input-xs" onchange="changeStatus(this.value,{{$group->id}})">
-                                    <option value="pending" @if($group->status == "pending") selected @endif>Pending</option>
-                                    <option value="done" @if($group->status == "done") selected @endif>Done</option>
-                                    <option value="not_done" @if($group->status == "not_done") selected @endif>Not Done</option>
-                                </select>
-                            </td>
 
-                            <td>
-                                <small>
-                                    <a data-toggle="modal" data-target="#edit_task_{{$group->id}}">Edit Remarks</a> -
-                                    <a href="{{url('task_delete/'.$group->id)}}">Delete</a> </small>
-                            </td>
+
+
                         </tr>
 
 
@@ -160,10 +141,10 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-            <form action="{{url('save_task')}}" id="submit" method="post">
+            <form action="{{url('save_user')}}" id="submit" method="post">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Task</h4>
+                    <h4 class="modal-title">Add User</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row" style="padding:20px;">
@@ -171,78 +152,28 @@
                         @csrf
                         <div class="col-lg-6 col-md-6 ">
                         <div class="form-group">
-                            <label for="email">Company Name:</label>
-                            <input type="text" class="form-control" name="c_name" id="email" required>
+                            <label for="email">User Name:</label>
+                            <input type="text" class="form-control" name="name" id="email" required>
 
                         </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 ">
-                            <div class="form-group">
-                                <label for="email">Assigned To:</label>
-                                <select name="user_id" class="form-control"  required>
-@foreach(\App\User::all() as $user)
-    <option value="{{$user->id}}">{{$user->name}}</option>
-    @endforeach
-                                </select>
-
-                            </div>
                         </div>
 
 
 
                         <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
-                                <label for="email">Date :</label>
-                                <input type="date" class="form-control" name="_date" required>
+                                <label for="email">Email :</label>
+                                <input type="email" class="form-control" name="email" required>
                             </div>
                         </div>
 
 
                         <div class="col-lg-6 col-md-6 ">
                             <div class="form-group">
-                                <label for="email">Process Name:</label>
-                                <input type="text" class="form-control" name="p_name" required>
+                                <label for="email">Password:</label>
+                                <input type="password" class="form-control" name="password" required>
                             </div>
                         </div>
-
-                        <div class="col-lg-6 col-md-6 ">
-                            <div class="form-group">
-                                <label for="email">Name of Concern:</label>
-                                <input type="text" class="form-control" name="n_concern" required>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 ">
-                            <div class="form-group">
-                                <label for="email">Zone:</label>
-                                <input type="text" class="form-control" name="zone" required>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6 col-md-6 ">
-                            <div class="form-group">
-                                <label for="email">Status:</label>
-                                <select class="form-control" name="status">
-                                    <option value="pending">Pending</option>
-                                    <option value="done">Done</option>
-                                    <option value="not_done">Not Done</option>
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-md-12 ">
-                            <div class="form-group">
-                                <label for="email">Comments:</label>
-                                <textarea type="text" class="form-control" name="comments" ></textarea>
-                            </div>
-                        </div>
-
-
-
-
 
 
 
