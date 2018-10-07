@@ -73,8 +73,14 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
+                        @if(Auth::user()->role_id == 1)
                         <a href="{{ url('/users') }}">Users </a>
+                        @endif
+                    @if(Auth::user()->role_id == 1)
                         <a href="{{ url('/tasks') }}">Tasks </a>
+                        @else
+                            <a href="{{ url('user/'.Auth::user()->id.'/tasks') }}">Tasks </a>
+                        @endif
                         <a href="{{ url('/companies') }}">Companies </a>
                         <a href="{{ url('/notifications') }}">Notifications </a>
                         <a class="dropdown-item" href="{{ route('logout') }}"

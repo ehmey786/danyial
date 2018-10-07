@@ -20,9 +20,9 @@
     <h2>
         Tasks:
         <small>
-            (Total Tasks:{{count($data['tasks'])}}) -
+            (Total Tasks:{{count($data['tasks'])}})  @if(Auth::user()->role_id == 1)-
             <a data-toggle="modal" data-target="#myModal">Add new Task</a>
-
+@endif
             @if(!empty($data['users']))
                 - {{$data['users']->name}}
                 @endif
@@ -53,7 +53,7 @@
                     {{--<th>Card</th>--}}
                     {{--<th>Phone #</th>--}}
                     <th>Remarks</th>
-                    <th>Comment</th>
+
                     <th>Status</th>
                     <th>Action</th>
 
@@ -78,7 +78,7 @@
                             <td>{{$group->remarks}}</td>
                             {{--<td>{{$group->card}}</td>--}}
                             {{--<td>{{$group->phone}}</td>--}}
-                            <td>{{ $group->comments}}</td>
+
 
                             <td>
                                 <select class="form-control input-xs" onchange="changeStatus(this.value,{{$group->id}})">
@@ -90,8 +90,9 @@
 
                             <td>
                                 <small>
-                                    <a data-toggle="modal" data-target="#edit_task_{{$group->id}}">Edit Remarks</a> -
-                                    <a href="{{url('task_delete/'.$group->id)}}">Delete</a> </small>
+                                    <a data-toggle="modal" data-target="#edit_task_{{$group->id}}">Edit Remarks</a>
+                                    @if(Auth::user()->role_id == 1) -
+                                    <a href="{{url('task_delete/'.$group->id)}}">Delete</a> @endif </small>
                             </td>
                         </tr>
 
@@ -233,12 +234,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 col-md-12 ">
-                            <div class="form-group">
-                                <label for="email">Comments:</label>
-                                <textarea type="text" class="form-control" name="comments" ></textarea>
-                            </div>
-                        </div>
+
 
 
 

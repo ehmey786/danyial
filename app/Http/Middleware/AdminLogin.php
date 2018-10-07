@@ -22,8 +22,9 @@ class AdminLogin
         }
         if (Auth::user()) {//dd(Route::getCurrentRoute()->getName());
             if (Auth::user()->role_id != 1) {
-                if (Route::getCurrentRoute()->getName() != 'save_comment' && Route::getCurrentRoute()->getName() != 'user.tasks' && Route::getCurrentRoute()->getName() != 'user.task_details') {
-                    return redirect('user/' . Auth::user()->id . '/tasks');
+                if (Route::getCurrentRoute()->getName() == 'users')// && Route::getCurrentRoute()->getName() != 'user.tasks' && Route::getCurrentRoute()->getName() != 'user.task_details')
+                {
+                    return redirect('/');
                 }
             }
         }

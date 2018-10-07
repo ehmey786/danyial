@@ -90,7 +90,7 @@
                             <td>{{count($group->employees)}}</td>
                             <td><select class="form-control input-xs" onchange="changeStatus(this.value,{{$group->id}})">
                                     <option value="Active" @if($group->status == "Active") selected @endif>Active</option>
-                                    <option value="Deactive" @if($group->status == "Deactive") selected @endif>Deactive</option>
+                                    <option value="Deactive" @if($group->status == "Deactive") selected @endif>InActive</option>
                                     <option value="Potential" @if($group->status == "Potential") selected @endif>Potential</option>
                                 </select></td>
                             <td>{{$group->main_activity}}</td>

@@ -315,7 +315,7 @@
                                 <option value="Active" @if($data['company']->status == "Active") selected @endif>Active
                                 </option>
                                 <option value="Deactive" @if($data['company']->status == "Deactive") selected @endif>
-                                    Deactive
+                                    InActive
                                 </option>
                                 <option value="Potential" @if($data['company']->status == "Potential") selected @endif>
                                     Potential

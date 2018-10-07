@@ -21,7 +21,7 @@ Route::get('/emails', 'EmailController@sendExpiryEmail');
 Route::group(['middleware' => ['AdminLogin']], function () {
 
 
-    Route::get('/users', 'GroupController@users');
+    Route::get('/users', 'GroupController@users')->name('users');
     Route::post('/save_user', 'GroupController@saveUser');
     Route::get('/user/{id}/tasks', 'GroupController@tasks')->name('user.tasks');
     Route::get('user/{id}/delete', 'GroupController@deleteUser');

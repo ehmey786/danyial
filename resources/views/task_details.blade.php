@@ -53,7 +53,6 @@
                     {{--<th>Card</th>--}}
                     {{--<th>Phone #</th>--}}
                     <th>Remarks</th>
-                    <th>Comment</th>
 
 
 
@@ -73,7 +72,6 @@
                             <td>{{$data['task_detail']->remarks}}</td>
                             {{--<td>{{$group->card}}</td>--}}
                             {{--<td>{{$group->phone}}</td>--}}
-                            <td>{{ $data['task_detail']->comments}}</td>
 
 
 
