@@ -26,7 +26,7 @@ Route::group(['middleware' => ['AdminLogin']], function () {
     Route::get('/user/{id}/tasks', 'GroupController@tasks')->name('user.tasks');
     Route::get('user/{id}/delete', 'GroupController@deleteUser');
     Route::post('/status_change_company', 'GroupController@statusChangeCompany');
-
+    Route::post('/status_change_share', 'GroupController@statusChangeShare');
 
     Route::post('/save_group', 'GroupController@save_group');
     Route::get('/group/delete/{id}', 'GroupController@delete_group');

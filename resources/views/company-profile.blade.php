@@ -335,21 +335,23 @@
                 </button>
             </div>
             <div class="panel-body">
+                <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Dob</th>
-                        <th>Lease Expiry</th>
-                        <th>Liscence Expiry</th>
-                        <th>Passport Expiry</th>
-                        <th>Visa Expiry</th>
+                        <th style="white-space: nowrap">Lease Expiry</th>
+                        <th style="white-space: nowrap">Liscence Expiry</th>
+                        <th style="white-space: nowrap">Passport Expiry</th>
+                        <th style="white-space: nowrap">Visa Expiry</th>
                         <th>Email</th>
                         <th>Share</th>
                         <th>Position</th>
                         <th>Nationality</th>
-                        <th>Previous Nationality</th>
+                        <th style="white-space: nowrap">Previous Nationality
+                        <th style="min-width:130px;">Status</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -373,6 +375,15 @@
                                 <td>{{$shareHolder->position}}</td>
                                 <td>{{$shareHolder->natoionality}}</td>
                                 <td>{{$shareHolder->pre_natoionality}}</td>
+                                <td><select class="form-control input-xs"
+                                            onchange="changeShareholderStatus(this.value,{{$shareHolder->id}})">
+                                        <option value="Active" @if($shareHolder->status == "Active") selected @endif>Active
+                                        </option>
+                                        <option value="InActive" @if($shareHolder->status == "InActive") selected @endif>
+                                            InActive
+                                        </option>
+
+                                    </select></td>
                                 <td><a href="{{url('delete/share-holder/'.$shareHolder->id)}}">Delete</a></td>
                             </tr>
                         @endforeach
@@ -385,6 +396,7 @@
 
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 
@@ -524,7 +536,18 @@
     <input type="text" name="id" id="status_id" style="display:none;">
     <input type="text" name="status" id="status_val" style="display:none;"></form>
 
+
+<form id="status_form_share" method="post" action="{{url('status_change_share')}}">
+    @csrf
+    <input type="text" name="id" id="status_share_id" style="display:none;">
+    <input type="text" name="status" id="status_val_share" style="display:none;"></form>
+
+
 <script>
+
+
+
+
     function submit_form() {
         document.getElementById('submit').submit();
     }
@@ -536,6 +559,14 @@
         document.getElementById('status_val').value=val;
         document.getElementById('status_form').submit();
     }
+
+    function changeShareholderStatus(val,id){
+        document.getElementById('status_share_id').value=id;
+        document.getElementById('status_val_share').value=val;
+        document.getElementById('status_form_share').submit();
+    }
+
+
 </script>
 
 </body>

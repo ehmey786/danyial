@@ -211,6 +211,10 @@ class GroupController extends Controller
 
     }
 
+    public function statusChangeShare(Request $request){
+        ShareHolder::find($request->id)->update(['status' => $request->status]);
+        return redirect()->back();
+    }
 
     public function tasks($id = null)
     {
