@@ -470,7 +470,9 @@ class GroupController extends Controller
 
     public function save_company(Request $request)
     {
-        try {
+        try
+        {
+
             $company = Company::create($request->except(['_token']));
 
             return redirect()->back();

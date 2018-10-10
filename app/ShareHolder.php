@@ -10,10 +10,10 @@ class ShareHolder extends Model
 
     protected $fillable=[
         'status',
-        'lease_date',
+
         'visa_expiry',
         'passport_expiry',
-        'lisc_expiry',
+
         'name',
         'email',
         'dob',

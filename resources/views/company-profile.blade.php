@@ -117,6 +117,18 @@
                                                        required>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="email">Liscence Expiry</label>
+                                                <input type="date" class="form-control"
+                                                       value="{{$data['company']->lisc_expiry}}"
+                                                       name="lisc_expiry"
+                                                       required>
+                                            </div>
+                                        </div>
+
+
                                         <div class="col-lg-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="email">Zone</label>
@@ -126,6 +138,20 @@
                                                        required>
                                             </div>
                                         </div>
+
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="email">Lease Expiry</label>
+                                                <input type="date" class="form-control"
+                                                       value="{{$data['company']->lease_date}}"
+                                                       name="lease_date" id="f_date"
+                                                       required>
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="col-lg-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="email">Expiry</label>
@@ -306,6 +332,14 @@
                         <td> Financial Ending Date</td>
                         <td>{{$data['company']->fi_ending_date}}</td>
                     </tr>
+                    <tr>
+                        <td>Lease Expiry Date</td>
+                        <td>{{$data['company']->lease_date}}</td>
+                    </tr>
+                    <tr>
+                        <td> Liscence Expiry Date</td>
+                        <td>{{$data['company']->lisc_expiry}}</td>
+                    </tr>
 
 
                     <tr>
@@ -342,8 +376,7 @@
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Dob</th>
-                        <th style="white-space: nowrap">Lease Expiry</th>
-                        <th style="white-space: nowrap">Liscence Expiry</th>
+
                         <th style="white-space: nowrap">Passport Expiry</th>
                         <th style="white-space: nowrap">Visa Expiry</th>
                         <th>Email</th>
@@ -364,8 +397,7 @@
                                 <td>{{$shareHolder->name}}</td>
                                 <td>{{$shareHolder->contact}}</td>
                                 <td>{{$shareHolder->dob}}</td>
-                                <td>{{$shareHolder->lease_date}}</td>
-                                <td>{{$shareHolder->lisc_expiry}}</td>
+
                                 <td>{{$shareHolder->passport_expiry}}</td>
                                 <td>{{$shareHolder->visa_expiry}}</td>
 
@@ -470,20 +502,9 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6 ">
-                            <div class="form-group">
-                                <label for="email">Liscence Expiry:</label>
-                                <input type="date" class="form-control" name="lisc_expiry" required>
-                            </div>
-                        </div>
 
 
-                        <div class="col-lg-6 col-md-6 ">
-                            <div class="form-group">
-                                <label for="email">Lease Expiry:</label>
-                                <input type="date" class="form-control" name="lease_date" required>
-                            </div>
-                        </div>
+
 
 
                         <div class="col-lg-6 col-md-6 ">
